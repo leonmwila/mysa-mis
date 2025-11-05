@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========== ATHLETE VIEWS ========== -->
+    
+    <!-- Athlete Form View -->
+    <record id="view_sports_athlete_form" model="ir.ui.view">
+        <field name="name">sports.athlete.form</field>
+        <field name="model">sports.athlete</field>
+        <field name="arch" type="xml">
+            <form string="Athlete Profile">
+                <header>
+                    <button string="Retire" name="action_retire_athlete" type="object" 
+                            class="btn-secondary" invisible="athlete_status != 'active'"
+                            confirm="Are you sure you want to retire this athlete?"/>
+                    <button string="Suspend" name="action_suspend_athlete" type="object" 
+                            class="btn-warning" invisible="athlete_status != 'active'"
+                            confirm="Are you sure you want to suspend this athlete?"/>
+                    <button string="Reactivate" name="action_reactivate_athlete" type="object" 
+                            class="btn-primary" invisible="athlete_status not in ['retired','suspended','inactive']"/>
+                    <field name="athlete_status" widget="statusbar" statusbar_visible="active,injured,suspended,retired"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_achievements" icon="fa-trophy">
+                            <field string="Achievements" name="total_achievements" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_performance_metrics" icon="fa-line-chart">
+                            <field string="Metrics" name="performance_metric_ids" widget="statinfo"/>
+                        </button>
+                    </div>
+                    
+                    <field name="photo" widget="image" class="oe_avatar" options="{'preview_image': 'photo', 'size': [90, 90]}"/>
+                    
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline" placeholder="Full Name"/>
+                        </h1>
+                        <div>
+                            <field name="athlete_id" readonly="1"/>
+                        </div>
+                    </div>
+                    
+                    <group>
+                        <group string="Personal Information">
+                            <field name="email" widget="email"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="gender"/>
+                            <field name="date_of_birth"/>
+                            <field name="age_computed" readonly="1"/>
+                            <field name="national_id"/>
+                            <field name="address"/>
+                        </group>
+                        <group string="Sports Information">
+                            <field name="primary_sport" required="1"/>
+                            <field name="secondary_sports"/>
+                            <field name="position"/>
+                            <field name="playing_level"/>
+                            <field name="association_id"/>
+                            <field name="zone_id"/>
+                            <field name="district"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group string="Career Information">
+                            <field name="career_start_date"/>
+                            <field name="years_active" readonly="1"/>
+                            <field name="athlete_status"/>
+                        </group>
+                        <group string="Event Participation">
+                            <field name="available_for_events"/>
+                            <field name="registration_status"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group string="Statistics">
+                            <field name="gold_medals" readonly="1"/>
+                            <field name="silver_medals" readonly="1"/>
+                            <field name="bronze_medals" readonly="1"/>
+                        </group>
+                        <group string="Emergency Contact">
+                            <field name="emergency_contact_name"/>
+                            <field name="emergency_contact_phone"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Medical Information">
+                        <group>
+                            <field name="medical_clearance"/>
+                            <field name="medical_clearance_date"/>
+                        </group>
+                        <field name="medical_notes" colspan="2"/>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Achievements" name="achievements">
+                            <!-- Achievements will be loaded here -->
+                            <p>Achievement tracking coming soon...</p>
+                        </page>
+                        <page string="Performance Metrics" name="metrics">
+                            <field name="performance_metric_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Athlete List View -->
+    <record id="view_sports_athlete_tree" model="ir.ui.view">
+        <field name="name">sports.athlete.tree</field>
+        <field name="model">sports.athlete</field>
+        <field name="arch" type="xml">
+            <list string="Athletes" decoration-success="athlete_status=='active'" 
+                  decoration-muted="athlete_status=='retired'" decoration-warning="athlete_status=='suspended'">
+                <field name="photo" widget="image" options="{'size': [40, 40]}"/>
+                <field name="name"/>
+                <field name="athlete_id"/>
+                <field name="primary_sport"/>
+                <field name="association_id"/>
+                <field name="zone_id"/>
+                <field name="playing_level"/>
+                <field name="age_computed"/>
+                <field name="total_achievements"/>
+                <field name="gold_medals"/>
+                <field name="athlete_status" widget="badge" 
+                       decoration-success="athlete_status=='active'" 
+                       decoration-warning="athlete_status=='suspended'"
+                       decoration-danger="athlete_status=='retired'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Athlete Kanban View -->
+    <record id="view_sports_athlete_kanban" model="ir.ui.view">
+        <field name="name">sports.athlete.kanban</field>
+        <field name="model">sports.athlete</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="athlete_id"/>
+                <field name="primary_sport"/>
+                <field name="athlete_status"/>
+                <field name="photo"/>
+                <field name="total_achievements"/>
+                <field name="gold_medals"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <field name="photo" widget="image" class="o_kanban_image_inner" options="{'size': [40, 40]}"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li class="mb4"><strong><field name="name"/></strong></li>
+                                    <li><field name="athlete_id"/></li>
+                                    <li><field name="primary_sport"/></li>
+                                    <li>
+                                        <span class="badge" t-att-class="record.athlete_status.raw_value === 'active' ? 'badge-success' : 'badge-secondary'">
+                                            <field name="athlete_status"/>
+                                        </span>
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_bottom_right">
+                                    <span class="badge badge-pill badge-warning" t-if="record.total_achievements.raw_value">
+                                        🏆 <field name="total_achievements"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Athlete Action -->
+    <record id="action_sports_athlete" model="ir.actions.act_window">
+        <field name="name">Athletes</field>
+        <field name="res_model">sports.athlete</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first athlete profile!
+            </p>
+            <p>
+                Register athletes with complete profiles including personal information,
+                sports specialization, performance metrics, and achievements.
+            </p>
+        </field>
+    </record>
+</odoo>

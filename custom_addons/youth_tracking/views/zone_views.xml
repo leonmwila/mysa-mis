@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Zone Form View -->
+    <record id="view_zone_form" model="ir.ui.view">
+        <field name="name">youth.zone.form</field>
+        <field name="model">youth.zone</field>
+        <field name="arch" type="xml">
+            <form string="Youth Zone">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_youth" type="object" 
+                                class="oe_stat_button" icon="fa-users">
+                            <field name="youth_count" widget="statbutton" string="Youth"/>
+                        </button>
+                        <button name="action_view_organizations" type="object" 
+                                class="oe_stat_button" icon="fa-building">
+                            <field name="organization_count" widget="statbutton" string="Organizations"/>
+                        </button>
+                        <button name="action_view_programs" type="object" 
+                                class="oe_stat_button" icon="fa-graduation-cap">
+                            <field name="program_count" widget="statbutton" string="Programs"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Zone Name" required="1"/>
+                        </h1>
+                        <div class="o_row">
+                            <field name="zone_code" placeholder="Zone Code"/>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group name="basic_info" string="Basic Information">
+                            <field name="zone_type"/>
+                            <field name="parent_zone_id" domain="[('id', '!=', id)]"/>
+                            <field name="province"/>
+                        </group>
+                        <group name="coordinator_info" string="Zone Coordination">
+                            <field name="coordinator_id" options="{'no_create': True}"/>
+                            <field name="coordinator_phone"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Performance Metrics" name="metrics">
+                            <group>
+                                <group string="Youth Metrics">
+                                    <field name="youth_count" readonly="1"/>
+                                    <field name="active_youth_count" readonly="1"/>
+                                    <field name="success_rate" readonly="1" widget="percentage"/>
+                                    <field name="organization_count" readonly="1"/>
+                                </group>
+                                <group string="Program Metrics">
+                                    <field name="program_count" readonly="1"/>
+                                    <field name="total_applications" readonly="1"/>
+                                    <field name="approved_applications" readonly="1"/>
+                                    <field name="budget_utilization_rate" readonly="1" widget="percentage"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Notes" name="notes">
+                            <field name="description" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Zone Tree View -->
+    <record id="view_zone_tree" model="ir.ui.view">
+        <field name="name">youth.zone.tree</field>
+        <field name="model">youth.zone</field>
+        <field name="arch" type="xml">
+            <list string="Youth Zones">
+                <field name="name"/>
+                <field name="zone_code"/>
+                <field name="zone_type"/>
+                <field name="province"/>
+                <field name="coordinator_id"/>
+                <field name="youth_count"/>
+                <field name="organization_count"/>
+                <field name="program_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Zone Kanban View -->
+    <record id="view_zone_kanban" model="ir.ui.view">
+        <field name="name">youth.zone.kanban</field>
+        <field name="model">youth.zone</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="youth_count"/>
+                <field name="organization_count"/>
+                <field name="program_count"/>
+                <field name="province"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="province"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-primary">
+                                            <i class="fa fa-users"/> <t t-esc="record.youth_count.value"/> Youth
+                                        </span>
+                                        <span class="badge badge-info">
+                                            <i class="fa fa-building"/> <t t-esc="record.organization_count.value"/> Orgs
+                                        </span>
+                                        <span class="badge badge-success">
+                                            <i class="fa fa-graduation-cap"/> <t t-esc="record.program_count.value"/> Programs
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Zone Search View -->
+    <record id="view_zone_search" model="ir.ui.view">
+        <field name="name">youth.zone.search</field>
+        <field name="model">youth.zone</field>
+        <field name="arch" type="xml">
+            <search string="Search Zones">
+                <field name="name"/>
+                <field name="zone_code"/>
+                <field name="province"/>
+                <field name="coordinator_id"/>
+                <separator/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Urban" name="urban" domain="[('zone_type', '=', 'urban')]"/>
+                <filter string="Rural" name="rural" domain="[('zone_type', '=', 'rural')]"/>
+                <filter string="District" name="district" domain="[('zone_type', '=', 'district')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Zone Action -->
+    <record id="action_zone" model="ir.actions.act_window">
+        <field name="name">Youth Zones</field>
+        <field name="res_model">youth.zone</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first youth zone
+            </p>
+            <p>
+                Zones help organize youth by geographical areas and facilitate PYDC coordination.
+            </p>
+        </field>
+    </record>
+
+</odoo>

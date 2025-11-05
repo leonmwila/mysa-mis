@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========== SPORTS ANALYTICS VIEWS ========== -->
+    
+    <!-- Sports Analytics Form View -->
+    <record id="view_sports_analytics_form" model="ir.ui.view">
+        <field name="name">sports.analytics.form</field>
+        <field name="model">sports.analytics</field>
+        <field name="arch" type="xml">
+            <form string="Sports Analytics Dashboard">
+                <header>
+                    <button string="Generate Report" name="action_generate_report" type="object" class="btn-primary"/>
+                    <button string="Export Data" name="action_export_data" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Sports Analytics Dashboard</h1>
+                        <p>Comprehensive sports performance and participation analytics</p>
+                    </div>
+                    
+                    <group string="Filter Parameters">
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="sport_type"/>
+                            <field name="zone_id" options="{'no_create': True}"/>
+                            <field name="association_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="total_athletes" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Total Athletes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="active_athletes" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Active Athletes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-body text-center">
+                                    <h2 class="text-info">
+                                        <field name="total_associations" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Associations</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-body text-center">
+                                    <h2 class="text-warning">
+                                        <field name="total_events" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Sports Events</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt16">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h5 class="mb-0">🥇 Gold Medals</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="text-warning">
+                                        <field name="gold_medals" widget="integer"/>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb16">
+                            <div class="card border-secondary">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">🥈 Silver Medals</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="text-secondary">
+                                        <field name="silver_medals" widget="integer"/>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-header" style="background-color: #cd7f32; color: white;">
+                                    <h5 class="mb-0">🥉 Bronze Medals</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 style="color: #cd7f32;">
+                                        <field name="bronze_medals" widget="integer"/>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <group>
+                        <group string="Performance Metrics">
+                            <field name="total_achievements"/>
+                            <field name="avg_performance_improvement" widget="percentage"/>
+                        </group>
+                        <group string="Top Performers">
+                            <field name="top_performing_zone"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Sports Analytics Action -->
+    <record id="action_sports_analytics" model="ir.actions.act_window">
+        <field name="name">Sports Analytics Dashboard</field>
+        <field name="res_model">sports.analytics</field>
+        <field name="view_mode">form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Welcome to Sports Analytics!
+            </p>
+            <p>
+                Analyze athlete performance, track achievements, and generate
+                comprehensive reports on sports activities and participation.
+            </p>
+        </field>
+    </record>
+
+    <!-- ========== MENU STRUCTURE ========== -->
+    
+    <!-- Root Menu -->
+        <!-- Root Menu -->
+    <menuitem id="menu_sports_tracking_root"
+              name="Sports Tracking &amp; Analytics"
+              sequence="3"/>
+
+    <!-- ========== MAIN FUNCTIONAL MENUS ========== -->
+    
+    <!-- Athletes Menu -->
+    <menuitem id="menu_sports_athletes"
+              name="👤 Athletes"
+              parent="menu_sports_tracking_root"
+              action="action_sports_athlete"
+              sequence="10"/>
+
+    <!-- Sports Zones Menu -->
+    <menuitem id="menu_sports_zones"
+              name="🏟️ Sports Zones"
+              parent="menu_sports_tracking_root"
+              action="action_sports_zone"
+              sequence="20"/>
+
+    <!-- Sports Associations Menu -->
+    <menuitem id="menu_sports_associations"
+              name="🏆 Sports Associations"
+              parent="menu_sports_tracking_root"
+              action="action_sports_association"
+              sequence="30"/>
+
+    <!-- Performance Metrics Menu -->
+    <menuitem id="menu_sports_performance"
+              name="📈 Performance Metrics"
+              parent="menu_sports_tracking_root"
+              action="action_sports_performance_metric"
+              sequence="40"/>
+
+    <!-- Achievements Menu -->
+    <menuitem id="menu_sports_achievements"
+              name="🥇 Achievements"
+              parent="menu_sports_tracking_root"
+              action="action_sports_achievement"
+              sequence="50"/>
+
+    <!-- Quick Actions Menu -->
+    <menuitem id="menu_sports_quick_actions" 
+              name="Quick Actions" 
+              parent="menu_sports_tracking_root" 
+              sequence="60"/>
+
+    <!-- Quick Add Actions -->
+    <record id="action_quick_add_athlete" model="ir.actions.act_window">
+        <field name="name">Quick Add Athlete</field>
+        <field name="res_model">sports.athlete</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'form_view_initial_mode': 'edit'}</field>
+    </record>
+
+    <record id="action_quick_add_achievement" model="ir.actions.act_window">
+        <field name="name">Quick Add Achievement</field>
+        <field name="res_model">sports.achievement</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'form_view_initial_mode': 'edit'}</field>
+    </record>
+
+    <record id="action_quick_add_metric" model="ir.actions.act_window">
+        <field name="name">Quick Add Performance Metric</field>
+        <field name="res_model">sports.performance.metric</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'form_view_initial_mode': 'edit'}</field>
+    </record>
+
+    <menuitem id="menu_quick_add_athlete" 
+              name="➕ Add Athlete" 
+              parent="menu_sports_quick_actions" 
+              action="action_quick_add_athlete"
+              sequence="10"/>
+
+    <menuitem id="menu_quick_add_achievement" 
+              name="🏆 Add Achievement" 
+              parent="menu_sports_quick_actions" 
+              action="action_quick_add_achievement"
+              sequence="20"/>
+
+    <menuitem id="menu_quick_add_metric" 
+              name="📊 Add Performance Metric" 
+              parent="menu_sports_quick_actions" 
+              action="action_quick_add_metric"
+              sequence="30"/>
+
+    <!-- Reports Menu -->
+    <menuitem id="menu_sports_reports" 
+              name="Reports &amp; Analytics" 
+              parent="menu_sports_tracking_root" 
+              sequence="70"/>
+
+    <menuitem id="menu_sports_analytics_detailed" 
+              name="Analytics Dashboard" 
+              parent="menu_sports_reports" 
+              action="action_sports_analytics"
+              sequence="10"/>
+
+    <!-- Additional Report Actions -->
+    <record id="action_athlete_performance_report" model="ir.actions.act_window">
+        <field name="name">Athlete Performance Report</field>
+        <field name="res_model">sports.performance.metric</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="context">{'search_default_group_athlete': 1}</field>
+    </record>
+
+    <record id="action_achievements_report" model="ir.actions.act_window">
+        <field name="name">Achievements Report</field>
+        <field name="res_model">sports.achievement</field>
+        <field name="view_mode">kanban,list,graph</field>
+        <field name="context">{'search_default_verified': 1, 'search_default_group_competition_level': 1}</field>
+    </record>
+
+    <menuitem id="menu_athlete_performance_report" 
+              name="Performance Trends" 
+              parent="menu_sports_reports" 
+              action="action_athlete_performance_report"
+              sequence="20"/>
+
+    <menuitem id="menu_achievements_report" 
+              name="Achievements Overview" 
+              parent="menu_sports_reports" 
+              action="action_achievements_report"
+              sequence="30"/>
+</odoo>

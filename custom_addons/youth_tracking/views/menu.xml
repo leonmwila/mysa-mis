@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Youth Dashboard Action -->
+    <record id="action_youth_dashboard" model="ir.actions.act_window">
+        <field name="name">Youth Dashboard</field>
+        <field name="res_model">youth.youth</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="target">current</field>
+    </record>
+
+    <!-- Program Actions -->
+    <record id="action_youth_program" model="ir.actions.act_window">
+        <field name="name">Youth Programs</field>
+        <field name="res_model">event.program</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('category', '=', 'youth')]</field>
+        <field name="context">{'default_category': 'youth'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first youth program
+            </p>
+            <p>
+                Programs help organize skills training, empowerment initiatives, and other youth development activities.
+            </p>
+        </field>
+    </record>
+
+    <!-- Organization Actions -->
+    <record id="action_youth_organization" model="ir.actions.act_window">
+        <field name="name">Youth Organizations</field>
+        <field name="res_model">youth.organization</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first youth organization
+            </p>
+            <p>
+                Organizations represent youth clubs, associations, and groups in different zones.
+            </p>
+        </field>
+    </record>
+
+    <!-- Achievement Actions -->
+    <record id="action_youth_achievement" model="ir.actions.act_window">
+        <field name="name">Youth Achievements</field>
+        <field name="res_model">youth.achievement</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Record youth achievements
+            </p>
+            <p>
+                Track awards, certifications, and recognitions earned by youth participants.
+            </p>
+        </field>
+    </record>
+
+    <!-- Reporting Actions -->
+    <record id="action_youth_reports" model="ir.actions.act_window">
+        <field name="name">Youth Reports</field>
+        <field name="res_model">youth.analytics</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Generate youth reports
+            </p>
+            <p>
+                Analyze youth program performance, application trends, and demographic data.
+            </p>
+        </field>
+    </record>
+
+    <!-- Main Youth Menu -->
+    <menuitem id="menu_youth_main" 
+              name="Youth Tracking" 
+              sequence="50" 
+              web_icon="youth_tracking,static/description/icon.png"/>
+
+    <!-- Dashboard Menu -->
+    <menuitem id="menu_youth_dashboard" 
+              name="Dashboard" 
+              parent="menu_youth_main" 
+              action="action_youth_dashboard" 
+              sequence="1"/>
+
+    <!-- Youth Management Menu -->
+    <menuitem id="menu_youth_management" 
+              name="Youth Management" 
+              parent="menu_youth_main" 
+              sequence="10"/>
+
+    <menuitem id="menu_youth_youth" 
+              name="Youth Profiles" 
+              parent="menu_youth_management" 
+              action="action_youth" 
+              sequence="1"/>
+
+    <menuitem id="menu_youth_applications" 
+              name="Applications" 
+              parent="menu_youth_management" 
+              action="action_application" 
+              sequence="2"/>
+
+    <menuitem id="menu_youth_achievements" 
+              name="Achievements" 
+              parent="menu_youth_management" 
+              action="action_youth_achievement" 
+              sequence="3"/>
+
+    <!-- Programs Menu -->
+    <menuitem id="menu_youth_programs" 
+              name="Programs &amp; Activities" 
+              parent="menu_youth_main" 
+              sequence="20"/>
+
+    <menuitem id="menu_youth_program" 
+              name="Programs" 
+              parent="menu_youth_programs" 
+              action="action_youth_program" 
+              sequence="1"/>
+
+    <menuitem id="menu_youth_organizations" 
+              name="Organizations" 
+              parent="menu_youth_programs" 
+              action="action_youth_organization" 
+              sequence="2"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_youth_configuration" 
+              name="Configuration" 
+              parent="menu_youth_main" 
+              sequence="90"/>
+
+    <menuitem id="menu_youth_zones" 
+              name="Zones" 
+              parent="menu_youth_configuration" 
+              action="action_zone" 
+              sequence="1"/>
+
+    <!-- Reporting Menu -->
+    <menuitem id="menu_youth_reporting" 
+              name="Reporting" 
+              parent="menu_youth_main" 
+              sequence="80"/>
+
+    <menuitem id="menu_youth_reports" 
+              name="Analytics &amp; Reports" 
+              parent="menu_youth_reporting" 
+              action="action_youth_reports" 
+              sequence="1"/>
+
+</odoo>

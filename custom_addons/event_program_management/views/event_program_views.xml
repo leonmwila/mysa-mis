@@ -1,0 +1,91 @@
+<odoo>
+    <record id="view_event_program_form" model="ir.ui.view">
+        <field name="name">event.program.form</field>
+        <field name="model">event.program</field>
+        <field name="arch" type="xml">
+            <form string="Event / Program">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="category"/>
+                        <field name="location"/>
+                        <field name="gender"/>
+                        <field name="age_group"/>
+                        <field name="coordinator_id"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="state" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="🏃 Athlete Participants" name="athlete_participants">
+                            <p class="text-muted">Select athletes to participate in this event/program:</p>
+                            <field name="athlete_participants_ids"/>
+                        </page>
+                        <!-- Athlete Participants functionality will be added back once base module is stable -->
+                        <page string="📝 Manual Participants" name="manual_participants">
+                            <field name="participants_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="age"/>
+                                    <field name="gender"/>
+                                    <field name="contact"/>
+                                    <field name="attended"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Results">
+                            <field name="results_ids">
+                                <list editable="bottom">
+                                    <field name="participant_id"/>
+                                    <field name="score"/>
+                                    <field name="position"/>
+                                    <field name="remarks"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_event_program_tree" model="ir.ui.view">
+        <field name="name">event.program.list</field>
+        <field name="model">event.program</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="location"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <!-- <field name="participant_count" string="Athletes"/> -->
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_event_program" model="ir.actions.act_window">
+        <field name="name">Programs and Events</field>
+        <field name="res_model">event.program</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Root Menu -->
+    <menuitem id="menu_event_main_root" 
+              name="Events and Programs" 
+              sequence="2"
+              web_icon="fa fa-calendar"/>
+
+    <!-- Sub-menu for Programs -->
+    <menuitem id="menu_event_main_programs" 
+              name="Programs" 
+              parent="menu_event_main_root" 
+              action="action_event_program" 
+              sequence="10"/>
+</odoo>

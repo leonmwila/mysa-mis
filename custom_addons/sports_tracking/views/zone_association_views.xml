@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========== SPORTS ZONE VIEWS ========== -->
+    
+    <!-- Sports Zone Form View -->
+    <record id="view_sports_zone_form" model="ir.ui.view">
+        <field name="name">sports.zone.form</field>
+        <field name="model">sports.zone</field>
+        <field name="arch" type="xml">
+            <form string="Sports Zone">
+                <header>
+                    <button string="Generate Report" name="action_generate_zone_report" type="object" class="btn-primary"/>
+                    <field name="active" widget="boolean_button" options="{'terminology': 'active'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_associations" icon="fa-building">
+                            <field string="Associations" name="total_associations" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_athletes" icon="fa-users">
+                            <field string="Athletes" name="total_athletes" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_programs" icon="fa-calendar">
+                            <field string="Programs" name="active_programs" widget="statinfo"/>
+                        </button>
+                    </div>
+                    
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline" placeholder="Zone Name"/>
+                        </h1>
+                        <div>
+                            <span class="badge badge-secondary">
+                                <field name="code"/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <group>
+                        <group string="Zone Information">
+                            <field name="province"/>
+                            <field name="zone_coordinator_id" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Coverage">
+                            <field name="districts" widget="text"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Description">
+                        <field name="description" nolabel="1" colspan="2"/>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Associations" name="associations">
+                            <field name="association_ids">
+                                <list editable="bottom" decoration-muted="active==False">
+                                    <field name="name"/>
+                                    <field name="sports_type"/>
+                                    <field name="total_athletes"/>
+                                    <field name="contact_person"/>
+                                    <field name="phone"/>
+                                    <field name="active" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Athletes" name="athletes">
+                            <field name="athlete_ids">
+                                <list decoration-success="athlete_status=='active'" decoration-muted="athlete_status=='retired'">
+                                    <field name="name"/>
+                                    <field name="athlete_id"/>
+                                    <field name="primary_sport"/>
+                                    <field name="association_id"/>
+                                    <field name="total_achievements"/>
+                                    <field name="athlete_status" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Sports Zone Tree View -->
+    <record id="view_sports_zone_tree" model="ir.ui.view">
+        <field name="name">sports.zone.tree</field>
+        <field name="model">sports.zone</field>
+        <field name="arch" type="xml">
+            <list string="Sports Zones" decoration-muted="active==False">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="province"/>
+                <field name="zone_coordinator_id"/>
+                <field name="total_associations"/>
+                <field name="total_athletes"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Sports Zone Kanban View -->
+    <record id="view_sports_zone_kanban" model="ir.ui.view">
+        <field name="name">sports.zone.kanban</field>
+        <field name="model">sports.zone</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="province"/>
+                <field name="total_associations"/>
+                <field name="total_athletes"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                        <small class="o_kanban_record_subtitle text-muted">
+                                            <field name="province"/>
+                                        </small>
+                                    </div>
+                                    <span class="badge badge-pill badge-info">
+                                        <field name="code"/>
+                                    </span>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span class="badge badge-secondary">
+                                                📊 <field name="total_associations"/> Associations
+                                            </span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="badge badge-primary">
+                                                👥 <field name="total_athletes"/> Athletes
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ========== SPORTS ASSOCIATION VIEWS ========== -->
+    
+    <!-- Sports Association Form View -->
+    <record id="view_sports_association_form" model="ir.ui.view">
+        <field name="name">sports.association.form</field>
+        <field name="model">sports.association</field>
+        <field name="arch" type="xml">
+            <form string="Sports Association">
+                <header>
+                    <button string="Generate Report" name="action_generate_association_report" type="object" class="btn-primary"/>
+                    <field name="active" widget="boolean_button" options="{'terminology': 'active'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_athletes" icon="fa-users">
+                            <field string="Athletes" name="total_athletes" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_active_athletes" icon="fa-user-plus">
+                            <field string="Active" name="active_athletes" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_events" icon="fa-calendar">
+                            <field string="Events" name="total_events" widget="statinfo"/>
+                        </button>
+                    </div>
+                    
+                    <field name="logo" widget="image" class="oe_avatar" options="{'preview_image': 'logo', 'size': [90, 90]}"/>
+                    
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline" placeholder="Association Name"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group string="Association Information">
+                            <field name="sports_type" required="1"/>
+                            <field name="zone_id" required="1" options="{'no_create': True}"/>
+                            <field name="established_date"/>
+                            <field name="registration_number"/>
+                        </group>
+                        <group string="Contact Information">
+                            <field name="contact_person"/>
+                            <field name="email" widget="email"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="address"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Description">
+                        <field name="description" nolabel="1" colspan="2"/>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Athletes" name="athletes">
+                            <field name="athlete_ids">
+                                <list decoration-success="athlete_status=='active'" decoration-muted="athlete_status=='retired'">
+                                    <field name="name"/>
+                                    <field name="athlete_id"/>
+                                    <field name="primary_sport"/>
+                                    <field name="playing_level"/>
+                                    <field name="total_achievements"/>
+                                    <field name="athlete_status" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Sports Association Tree View -->
+    <record id="view_sports_association_tree" model="ir.ui.view">
+        <field name="name">sports.association.tree</field>
+        <field name="model">sports.association</field>
+        <field name="arch" type="xml">
+            <list string="Sports Associations" decoration-muted="active==False">
+                <field name="name"/>
+                <field name="sports_type"/>
+                <field name="zone_id"/>
+                <field name="contact_person"/>
+                <field name="phone"/>
+                <field name="total_athletes"/>
+                <field name="active_athletes"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Sports Association Kanban View -->
+    <record id="view_sports_association_kanban" model="ir.ui.view">
+        <field name="name">sports.association.kanban</field>
+        <field name="model">sports.association</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="sports_type"/>
+                <field name="zone_id"/>
+                <field name="total_athletes"/>
+                <field name="active_athletes"/>
+                <field name="logo"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <field name="logo" widget="image" class="o_kanban_image_inner" options="{'size': [40, 40]}"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li class="mb4"><strong><field name="name"/></strong></li>
+                                    <li><field name="sports_type"/></li>
+                                    <li><field name="zone_id"/></li>
+                                </ul>
+                                <div class="oe_kanban_bottom_right">
+                                    <span class="badge badge-pill badge-primary">
+                                        👥 <field name="total_athletes"/>
+                                    </span>
+                                    <span class="badge badge-pill badge-success">
+                                        ✓ <field name="active_athletes"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_sports_zone" model="ir.actions.act_window">
+        <field name="name">Sports Zones</field>
+        <field name="res_model">sports.zone</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first sports zone!
+            </p>
+            <p>
+                Sports zones organize athletic activities by geographical regions.
+                Each zone can contain multiple associations and athletes.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_sports_association" model="ir.actions.act_window">
+        <field name="name">Sports Associations</field>
+        <field name="res_model">sports.association</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first sports association!
+            </p>
+            <p>
+                Sports associations organize athletes by sport type and manage
+                their training, competitions, and development programs.
+            </p>
+        </field>
+    </record>
+</odoo>

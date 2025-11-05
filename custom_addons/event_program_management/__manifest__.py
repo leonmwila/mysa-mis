@@ -1,0 +1,22 @@
+{
+    'name': 'Event & Program Management',
+    'version': 1.0,
+    'author': 'Smart Zambia Institute',
+    'category': 'Arts & Sports',
+    'summary': 'Manage youth programs, arts events, and sports tournaments',
+    'maintainer': 'Smart Zambia Institute',
+    'website': 'mays.gov.zm',
+    'licence': 'AGPL-3',
+    'demo':[],
+        'depends': ['base', 'sports_tracking'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/event_program_views.xml',
+        'views/participant_views.xml',
+        'views/result_views.xml',
+        'views/achievement_integration_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

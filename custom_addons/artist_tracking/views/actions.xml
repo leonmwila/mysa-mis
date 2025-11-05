@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Artist Association Action -->
+    <record id="action_artist_association" model="ir.actions.act_window">
+        <field name="name">Artist Associations</field>
+        <field name="res_model">artist.association</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first artist association!
+            </p>
+            <p>
+                Manage artist groups, organizations, and cultural associations.
+            </p>
+        </field>
+    </record>
+
+    <!-- Artist Zone Action -->
+    <record id="action_artist_zone" model="ir.actions.act_window">
+        <field name="name">Artist Zones</field>
+        <field name="res_model">artist.zone</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first zone!
+            </p>
+            <p>
+                Organize artists by geographical zones and regions.
+            </p>
+        </field>
+    </record>
+
+    <!-- Artist Venue Action -->
+    <record id="action_artist_venue" model="ir.actions.act_window">
+        <field name="name">Cultural Venues</field>
+        <field name="res_model">artist.venue</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register your first venue!
+            </p>
+            <p>
+                Manage theaters, galleries, studios, and other cultural venues.
+            </p>
+        </field>
+    </record>
+
+    <!-- Artist Performance Action -->
+    <record id="action_artist_performance" model="ir.actions.act_window">
+        <field name="name">Artist Performances</field>
+        <field name="res_model">artist.performance.metric</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Record your first performance!
+            </p>
+            <p>
+                Track artistic performances, ratings, and development progress.
+            </p>
+        </field>
+    </record>
+
+    <!-- Artist Achievement Action -->
+    <record id="action_artist_achievement" model="ir.actions.act_window">
+        <field name="name">Artist Achievements</field>
+        <field name="res_model">artist.achievement</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your first achievement!
+            </p>
+            <p>
+                Record awards, competitions, recognitions, and milestones.
+            </p>
+        </field>
+    </record>
+
+    <!-- Artist Dashboard Action -->
+    <record id="action_artist_dashboard" model="ir.actions.act_window">
+        <field name="name">Artist Dashboard</field>
+        <field name="res_model">artist.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+
+    <!-- Artist Reports Action -->
+    <record id="action_artist_reports" model="ir.actions.act_window">
+        <field name="name">Artist Reports</field>
+        <field name="res_model">artist.dashboard</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <!-- Artist Specialization Action -->
+    <record id="action_artist_specialization" model="ir.actions.act_window">
+        <field name="name">Artist Specializations</field>
+        <field name="res_model">artist.specialization</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first specialization!
+            </p>
+            <p>
+                Define specific artistic specializations and techniques.
+            </p>
+        </field>
+    </record>
+
+    <!-- Achievement Category Action -->
+    <record id="action_achievement_category" model="ir.actions.act_window">
+        <field name="name">Achievement Categories</field>
+        <field name="res_model">artist.achievement.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Achievement Level Action -->
+    <record id="action_achievement_level" model="ir.actions.act_window">
+        <field name="name">Achievement Levels</field>
+        <field name="res_model">artist.achievement.level</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

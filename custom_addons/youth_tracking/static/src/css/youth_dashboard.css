@@ -1,0 +1,83 @@
+/* Youth Tracking Dashboard Styles */
+
+.o_kanban_dashboard {
+    padding: 20px;
+}
+
+.o_kanban_dashboard .o_kanban_card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 10px;
+}
+
+.o_kanban_dashboard .o_value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2E7D32;
+}
+
+.youth_statistics {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.youth_card {
+    transition: transform 0.2s;
+}
+
+.youth_card:hover {
+    transform: translateY(-2px);
+}
+
+.youth_status_active {
+    color: #4CAF50;
+}
+
+.youth_status_inactive {
+    color: #FF5722;
+}
+
+.program_status_active {
+    background-color: #E8F5E8;
+    color: #2E7D32;
+}
+
+.program_status_completed {
+    background-color: #E3F2FD;
+    color: #1565C0;
+}
+
+.application_status_pending {
+    background-color: #FFF3E0;
+    color: #F57C00;
+}
+
+.application_status_approved {
+    background-color: #E8F5E8;
+    color: #2E7D32;
+}
+
+.application_status_rejected {
+    background-color: #FFEBEE;
+    color: #C62828;
+}
+
+/* Organization Cards */
+.organization_card {
+    border-left: 4px solid #9C27B0;
+}
+
+/* Zone Cards */
+.zone_card {
+    border-left: 4px solid #2196F3;
+}
+
+/* Achievement Cards */
+.achievement_card {
+    border-left: 4px solid #FF9800;
+}

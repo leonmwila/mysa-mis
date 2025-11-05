@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_event_program_user,event.program.user,model_event_program,base.group_user,1,1,1,1
+access_event_participant_user,event.participant.user,model_event_participant,base.group_user,1,1,1,1
+access_event_result_user,event.result.user,model_event_result,base.group_user,1,1,1,1
+access_event_program_manager,event.program.manager,model_event_program,base.group_system,1,1,1,1
+access_event_participant_manager,event.participant.manager,model_event_participant,base.group_system,1,1,1,1
+access_event_result_manager,event.result.manager,model_event_result,base.group_system,1,1,1,1

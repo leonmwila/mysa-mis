@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Youth Tracking Security Groups -->
+    <record id="group_youth_user" model="res.groups">
+        <field name="name">Youth User</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Basic youth system access - can view own profile and basic data</field>
+    </record>
+
+    <record id="group_youth_officer" model="res.groups">
+        <field name="name">Youth Officer</field>
+        <field name="implied_ids" eval="[(4, ref('group_youth_user'))]"/>
+        <field name="comment">Youth officers can manage youth profiles, programs, and organizations</field>
+    </record>
+
+    <record id="group_youth_pydc" model="res.groups">
+        <field name="name">PYDC Coordinator</field>
+        <field name="implied_ids" eval="[(4, ref('group_youth_officer'))]"/>
+        <field name="comment">PYDC coordinators can review and approve applications at zone level</field>
+    </record>
+
+    <record id="group_youth_committee" model="res.groups">
+        <field name="name">Youth Committee Member</field>
+        <field name="implied_ids" eval="[(4, ref('group_youth_officer'))]"/>
+        <field name="comment">Committee members can approve applications after PYDC review</field>
+    </record>
+
+    <record id="group_youth_director" model="res.groups">
+        <field name="name">Youth Director</field>
+        <field name="implied_ids" eval="[(4, ref('group_youth_committee'))]"/>
+        <field name="comment">Directors can provide final approval for high-value applications</field>
+    </record>
+
+    <record id="group_youth_admin" model="res.groups">
+        <field name="name">Youth Administrator</field>
+        <field name="implied_ids" eval="[(4, ref('group_youth_director'))]"/>
+        <field name="comment">Full administrative access to youth tracking system</field>
+    </record>
+
+    <!-- Record Rules will be added later when the youth model has proper user relationships -->
+
+</odoo>

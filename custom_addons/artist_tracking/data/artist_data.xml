@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Artist ID Sequence -->
+    <record id="seq_artist_artist" model="ir.sequence">
+        <field name="name">Artist ID</field>
+        <field name="code">artist.artist</field>
+        <field name="prefix">ART</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Association ID Sequence -->
+    <record id="seq_artist_association" model="ir.sequence">
+        <field name="name">Association ID</field>
+        <field name="code">artist.association</field>
+        <field name="prefix">ASSOC</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Default Artist Specializations for Dance -->
+    <record id="specialization_ballet" model="artist.specialization">
+        <field name="name">Ballet</field>
+        <field name="art_category">dance</field>
+        <field name="description">Classical ballet technique and performance</field>
+    </record>
+
+    <record id="specialization_contemporary" model="artist.specialization">
+        <field name="name">Contemporary Dance</field>
+        <field name="art_category">dance</field>
+        <field name="description">Modern contemporary dance forms</field>
+    </record>
+
+    <record id="specialization_traditional_dance" model="artist.specialization">
+        <field name="name">Traditional Dance</field>
+        <field name="art_category">dance</field>
+        <field name="description">Traditional and cultural dance forms</field>
+    </record>
+
+    <record id="specialization_hip_hop" model="artist.specialization">
+        <field name="name">Hip Hop</field>
+        <field name="art_category">dance</field>
+        <field name="description">Hip hop and street dance styles</field>
+    </record>
+
+    <!-- Default Artist Specializations for Music -->
+    <record id="specialization_vocal" model="artist.specialization">
+        <field name="name">Vocal Performance</field>
+        <field name="art_category">music</field>
+        <field name="description">Singing and vocal performance</field>
+    </record>
+
+    <record id="specialization_piano" model="artist.specialization">
+        <field name="name">Piano</field>
+        <field name="art_category">music</field>
+        <field name="description">Piano performance and composition</field>
+    </record>
+
+    <record id="specialization_guitar" model="artist.specialization">
+        <field name="name">Guitar</field>
+        <field name="art_category">music</field>
+        <field name="description">Guitar performance (acoustic and electric)</field>
+    </record>
+
+    <record id="specialization_drums" model="artist.specialization">
+        <field name="name">Drums</field>
+        <field name="art_category">music</field>
+        <field name="description">Drum kit and percussion performance</field>
+    </record>
+
+    <record id="specialization_composition" model="artist.specialization">
+        <field name="name">Composition</field>
+        <field name="art_category">music</field>
+        <field name="description">Music composition and arranging</field>
+    </record>
+
+    <!-- Default Artist Specializations for Visual Arts -->
+    <record id="specialization_painting" model="artist.specialization">
+        <field name="name">Painting</field>
+        <field name="art_category">visual_arts</field>
+        <field name="description">Oil, acrylic, watercolor painting</field>
+    </record>
+
+    <record id="specialization_sculpture" model="artist.specialization">
+        <field name="name">Sculpture</field>
+        <field name="art_category">visual_arts</field>
+        <field name="description">3D sculptural works in various media</field>
+    </record>
+
+    <record id="specialization_photography" model="artist.specialization">
+        <field name="name">Photography</field>
+        <field name="art_category">visual_arts</field>
+        <field name="description">Digital and film photography</field>
+    </record>
+
+    <record id="specialization_drawing" model="artist.specialization">
+        <field name="name">Drawing</field>
+        <field name="art_category">visual_arts</field>
+        <field name="description">Pencil, charcoal, and digital drawing</field>
+    </record>
+
+    <!-- Default Artist Specializations for Theater -->
+    <record id="specialization_acting" model="artist.specialization">
+        <field name="name">Acting</field>
+        <field name="art_category">theater</field>
+        <field name="description">Stage and screen acting</field>
+    </record>
+
+    <record id="specialization_directing" model="artist.specialization">
+        <field name="name">Directing</field>
+        <field name="art_category">theater</field>
+        <field name="description">Theater and film directing</field>
+    </record>
+
+    <record id="specialization_playwriting" model="artist.specialization">
+        <field name="name">Playwriting</field>
+        <field name="art_category">theater</field>
+        <field name="description">Writing plays and scripts</field>
+    </record>
+
+    <!-- Default Achievement Categories -->
+    <record id="achievement_category_artistic" model="artist.achievement.category">
+        <field name="name">Artistic Excellence</field>
+        <field name="description">Recognition for outstanding artistic achievement</field>
+        <field name="art_category">all</field>
+        <field name="points_value">100</field>
+    </record>
+
+    <record id="achievement_category_technical" model="artist.achievement.category">
+        <field name="name">Technical Skill</field>
+        <field name="description">Recognition for technical mastery</field>
+        <field name="art_category">all</field>
+        <field name="points_value">80</field>
+    </record>
+
+    <record id="achievement_category_innovation" model="artist.achievement.category">
+        <field name="name">Innovation</field>
+        <field name="description">Recognition for creative innovation</field>
+        <field name="art_category">all</field>
+        <field name="points_value">120</field>
+    </record>
+
+    <!-- Default Achievement Levels -->
+    <record id="achievement_level_local" model="artist.achievement.level">
+        <field name="name">Local/Community</field>
+        <field name="description">Community and local level achievements</field>
+        <field name="points_multiplier">1.0</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="achievement_level_district" model="artist.achievement.level">
+        <field name="name">District</field>
+        <field name="description">District level achievements</field>
+        <field name="points_multiplier">1.5</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="achievement_level_provincial" model="artist.achievement.level">
+        <field name="name">Provincial</field>
+        <field name="description">Provincial level achievements</field>
+        <field name="points_multiplier">2.0</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="achievement_level_national" model="artist.achievement.level">
+        <field name="name">National</field>
+        <field name="description">National level achievements</field>
+        <field name="points_multiplier">3.0</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="achievement_level_international" model="artist.achievement.level">
+        <field name="name">International</field>
+        <field name="description">International level achievements</field>
+        <field name="points_multiplier">5.0</field>
+        <field name="sequence">50</field>
+    </record>
+</odoo>

@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Odoo
+odoo.log
+*.log
+filestore/
+sessions/
+addons/
+odoo/
+setup/
+debian/
+doc/
+*.pyc
+*.pyo
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+/tmp/
+*.tmp

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ========== PERFORMANCE METRICS VIEWS ========== -->
+    
+    <!-- Performance Metric Form View -->
+    <record id="view_sports_performance_metric_form" model="ir.ui.view">
+        <field name="name">sports.performance.metric.form</field>
+        <field name="model">sports.performance.metric</field>
+        <field name="arch" type="xml">
+            <form string="Performance Metric">
+                <header>
+                    <button string="Verify" name="action_verify" type="object" class="btn-primary" 
+                            invisible="verified" confirm="Verify this performance metric?"/>
+                    <field name="verified" widget="boolean_button" options="{'terminology': 'verified'}"/>
+                    <field name="is_personal_best" widget="boolean_button" options="{'terminology': 'personal_best'}" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_athlete_metrics" icon="fa-line-chart">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="improvement" widget="float" options="{'precision': 2}"/>
+                                </span>
+                                <span class="o_stat_text">Improvement</span>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline" placeholder="Metric Name"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group string="Athlete &amp; Event">
+                            <field name="athlete_id" required="1" options="{'no_create': True}"/>
+                            <field name="event_name"/>
+                            <field name="date" required="1"/>
+                            <field name="location"/>
+                        </group>
+                        <group string="Metric Details">
+                            <field name="metric_type" required="1"/>
+                            <label for="value" string="Value"/>
+                            <div class="o_row">
+                                <field name="value" required="1"/>
+                                <field name="unit" placeholder="Unit"/>
+                            </div>
+                            <field name="competition_level"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group string="Performance Analysis">
+                            <field name="previous_best"/>
+                            <field name="is_seasonal_best"/>
+                        </group>
+                        <group string="Context">
+                            <field name="weather_conditions"/>
+                            <field name="equipment_used"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Verification">
+                        <group>
+                            <field name="verified_by_id" readonly="1"/>
+                            <field name="verification_date" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Notes">
+                        <field name="coach_notes" colspan="2"/>
+                        <field name="notes" colspan="2"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Performance Metric Tree View -->
+    <record id="view_sports_performance_metric_tree" model="ir.ui.view">
+        <field name="name">sports.performance.metric.tree</field>
+        <field name="model">sports.performance.metric</field>
+        <field name="arch" type="xml">
+            <list string="Performance Metrics" decoration-success="is_personal_best==True" 
+                  decoration-info="verified==True" decoration-muted="verified==False">
+                <field name="date"/>
+                <field name="athlete_id"/>
+                <field name="name"/>
+                <field name="metric_type"/>
+                <field name="value"/>
+                <field name="unit"/>
+                <field name="improvement" decoration-success="improvement>0" decoration-danger="improvement&lt;0"/>
+                <field name="competition_level"/>
+                <field name="is_personal_best" widget="boolean_toggle"/>
+                <field name="verified" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Performance Metric Graph View -->
+    <record id="view_sports_performance_metric_graph" model="ir.ui.view">
+        <field name="name">sports.performance.metric.graph</field>
+        <field name="model">sports.performance.metric</field>
+        <field name="arch" type="xml">
+            <graph string="Performance Trends" type="line">
+                <field name="date" type="row"/>
+                <field name="value" type="measure"/>
+                <field name="athlete_id" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Performance Metric Pivot View -->
+    <record id="view_sports_performance_metric_pivot" model="ir.ui.view">
+        <field name="name">sports.performance.metric.pivot</field>
+        <field name="model">sports.performance.metric</field>
+        <field name="arch" type="xml">
+            <pivot string="Performance Analysis">
+                <field name="athlete_id" type="row"/>
+                <field name="metric_type" type="col"/>
+                <field name="value" type="measure"/>
+                <field name="improvement" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ========== ACHIEVEMENTS VIEWS ========== -->
+    
+    <!-- Achievement Form View -->
+    <record id="view_sports_achievement_form" model="ir.ui.view">
+        <field name="name">sports.achievement.form</field>
+        <field name="model">sports.achievement</field>
+        <field name="arch" type="xml">
+            <form string="Sports Achievement">
+                <header>
+                    <button string="Verify" name="action_verify" type="object" class="btn-primary" 
+                            invisible="verified"
+                            confirm="Verify this achievement?"/>
+                    <field name="verified" widget="boolean_button" options="{'terminology': 'verified'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_athlete_achievements" icon="fa-trophy">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="points_awarded"/>
+                                </span>
+                                <span class="o_stat_text">Points</span>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name"/>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline" placeholder="Achievement Title"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group string="Achievement Details">
+                            <field name="athlete_id" required="1" options="{'no_create': True}"/>
+                            <field name="achievement_type" required="1"/>
+                            <field name="medal_type" invisible="achievement_type != 'medal'" required="achievement_type == 'medal'"/>
+                            <field name="position" invisible="achievement_type == 'medal'"/>
+                        </group>
+                        <group string="Competition Details">
+                            <field name="event_name"/>
+                            <field name="competition_name"/>
+                            <field name="date" required="1"/>
+                            <field name="location"/>
+                            <field name="competition_level" required="1"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group string="Performance Details" invisible="achievement_type not in ['record', 'qualification']">
+                            <label for="performance_value" string="Performance"/>
+                            <div class="o_row">
+                                <field name="performance_value"/>
+                                <field name="performance_unit" placeholder="Unit"/>
+                            </div>
+                            <field name="record_type" invisible="achievement_type != 'record'"/>
+                        </group>
+                        <group string="Recognition">
+                            <field name="points_awarded"/>
+                            <field name="prize_money" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Team Achievement" invisible="not team_achievement">>
+                        <field name="team_achievement"/>
+                        <field name="team_members" invisible="not team_achievement"/>
+                        <field name="coach_id" options="{'no_create': True}"/>
+                    </group>
+                    
+                    <group string="Verification">
+                        <group>
+                            <field name="verified_by_id" readonly="1"/>
+                            <field name="verification_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="certificate_image" widget="image" options="{'size': [150, 150]}"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Additional Information">
+                        <field name="description" colspan="2"/>
+                        <field name="media_coverage" colspan="2"/>
+                        <field name="notes" colspan="2"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Achievement Tree View -->
+    <record id="view_sports_achievement_tree" model="ir.ui.view">
+        <field name="name">sports.achievement.tree</field>
+        <field name="model">sports.achievement</field>
+        <field name="arch" type="xml">
+            <list string="Sports Achievements" decoration-success="medal_type=='gold'" 
+                  decoration-info="medal_type=='silver'" decoration-warning="medal_type=='bronze'"
+                  decoration-muted="verified==False">
+                <field name="date"/>
+                <field name="athlete_id"/>
+                <field name="name"/>
+                <field name="achievement_type"/>
+                <field name="medal_type"/>
+                <field name="position"/>
+                <field name="competition_level"/>
+                <field name="competition_name"/>
+                <field name="points_awarded"/>
+                <field name="verified" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Achievement Kanban View -->
+    <record id="view_sports_achievement_kanban" model="ir.ui.view">
+        <field name="name">sports.achievement.kanban</field>
+        <field name="model">sports.achievement</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="medal_type">
+                <field name="name"/>
+                <field name="athlete_id"/>
+                <field name="medal_type"/>
+                <field name="competition_level"/>
+                <field name="date"/>
+                <field name="verified"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                        <small class="o_kanban_record_subtitle text-muted">
+                                            <field name="athlete_id"/>
+                                        </small>
+                                    </div>
+                                    <span t-if="record.medal_type.raw_value === 'gold'" class="badge badge-warning">🥇 Gold</span>
+                                    <span t-if="record.medal_type.raw_value === 'silver'" class="badge badge-secondary">🥈 Silver</span>
+                                    <span t-if="record.medal_type.raw_value === 'bronze'" class="badge badge-warning">🥉 Bronze</span>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="competition_level"/>
+                                    <br/>
+                                    <small><field name="date"/></small>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span t-if="record.verified.raw_value" class="badge badge-success">✓ Verified</span>
+                                        <span t-if="!record.verified.raw_value" class="badge badge-warning">⏳ Pending</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_sports_performance_metric" model="ir.actions.act_window">
+        <field name="name">Performance Metrics</field>
+        <field name="res_model">sports.performance.metric</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Record your first performance metric!
+            </p>
+            <p>
+                Track athlete performance over time with detailed metrics,
+                analyze trends, and identify personal bests.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_sports_achievement" model="ir.actions.act_window">
+        <field name="name">Achievements &amp; Awards</field>
+        <field name="res_model">sports.achievement</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_verified': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Record your first achievement!
+            </p>
+            <p>
+                Document athlete achievements, medals, records, and awards.
+                Verify and celebrate sporting excellence!
+            </p>
+        </field>
+    </record>
+</odoo>

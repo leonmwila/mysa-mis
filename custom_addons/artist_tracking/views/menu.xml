@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu for Artist Tracking (Root) -->
+    <menuitem id="menu_artist_tracking_root" 
+              name="Artist Tracking" 
+              sequence="4"
+              web_icon="artist_tracking,static/description/icon.png"/>
+
+    <!-- Artist Management Menu -->
+    <menuitem id="menu_artist_management" 
+              name="Artist Management" 
+              parent="menu_artist_tracking_root" 
+              sequence="10"/>
+
+    <!-- Artists Menu -->
+    <menuitem id="menu_artists" 
+              name="Artists" 
+              parent="menu_artist_management" 
+              action="action_artist" 
+              sequence="10"/>
+
+    <!-- Associations Menu -->
+    <menuitem id="menu_associations" 
+              name="Associations" 
+              parent="menu_artist_management" 
+              action="action_artist_association" 
+              sequence="20"/>
+
+    <!-- Zones Menu -->
+    <menuitem id="menu_zones" 
+              name="Zones" 
+              parent="menu_artist_management" 
+              action="action_artist_zone" 
+              sequence="30"/>
+
+    <!-- Venues Menu -->
+    <menuitem id="menu_venues" 
+              name="Venues" 
+              parent="menu_artist_management" 
+              action="action_artist_venue" 
+              sequence="40"/>
+
+    <!-- Performance Management Menu -->
+    <menuitem id="menu_performance_management" 
+              name="Performance Management" 
+              parent="menu_artist_tracking_root" 
+              sequence="20"/>
+
+    <!-- Performances Menu -->
+    <menuitem id="menu_performances" 
+              name="Performances" 
+              parent="menu_performance_management" 
+              action="action_artist_performance" 
+              sequence="10"/>
+
+    <!-- Achievements Menu -->
+    <menuitem id="menu_achievements" 
+              name="Achievements" 
+              parent="menu_performance_management" 
+              action="action_artist_achievement" 
+              sequence="20"/>
+
+    <!-- Analytics Menu -->
+    <menuitem id="menu_artist_analytics" 
+              name="Analytics" 
+              parent="menu_artist_tracking_root" 
+              sequence="30"/>
+
+    <!-- Dashboard Menu -->
+    <menuitem id="menu_artist_dashboard" 
+              name="Dashboard" 
+              parent="menu_artist_analytics" 
+              action="action_artist_dashboard" 
+              sequence="10"/>
+
+    <!-- Reports Menu -->
+    <menuitem id="menu_artist_reports" 
+              name="Reports" 
+              parent="menu_artist_analytics" 
+              action="action_artist_reports" 
+              sequence="20"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_artist_config" 
+              name="Configuration" 
+              parent="menu_artist_tracking_root" 
+              sequence="40"/>
+
+    <!-- Specializations Menu -->
+    <menuitem id="menu_specializations" 
+              name="Specializations" 
+              parent="menu_artist_config" 
+              action="action_artist_specialization" 
+              sequence="10"/>
+
+    <!-- Achievement Categories Menu -->
+    <menuitem id="menu_achievement_categories" 
+              name="Achievement Categories" 
+              parent="menu_artist_config" 
+              action="action_achievement_category" 
+              sequence="20"/>
+
+    <!-- Achievement Levels Menu -->
+    <menuitem id="menu_achievement_levels" 
+              name="Achievement Levels" 
+              parent="menu_artist_config" 
+              action="action_achievement_level" 
+              sequence="30"/>
+</odoo>

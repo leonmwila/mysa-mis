@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Achievement Form View to add Event/Program dropdown -->
+    <record id="view_sports_achievement_form_extended" model="ir.ui.view">
+        <field name="name">sports.achievement.form.extended</field>
+        <field name="model">sports.achievement</field>
+        <field name="inherit_id" ref="sports_tracking.view_sports_achievement_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='event_name']" position="before">
+                <field name="event_program_id" string="Event/Program" options="{'no_create': True, 'no_edit': True}"/>
+            </xpath>
+            <xpath expr="//field[@name='event_name']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="invisible">not event_program_id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='event_name']" position="after">
+                <field name="event_date_start" readonly="1" invisible="not event_program_id"/>
+                <field name="event_date_end" readonly="1" invisible="not event_program_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

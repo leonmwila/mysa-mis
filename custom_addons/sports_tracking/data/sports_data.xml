@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for Athlete IDs -->
+        <record id="seq_sports_athlete" model="ir.sequence">
+            <field name="name">Sports Athlete Sequence</field>
+            <field name="code">sports.athlete</field>
+            <field name="prefix">ATH</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+            <field name="implementation">standard</field>
+        </record>
+
+        <!-- Default Sports Zones -->
+        <record id="zone_lusaka" model="sports.zone">
+            <field name="name">Lusaka Zone</field>
+            <field name="code">LZN</field>
+            <field name="province">Lusaka</field>
+            <field name="districts">Lusaka, Kafue, Chongwe, Luangwa</field>
+        </record>
+
+        <record id="zone_copperbelt" model="sports.zone">
+            <field name="name">Copperbelt Zone</field>
+            <field name="code">CBZ</field>
+            <field name="province">Copperbelt</field>
+            <field name="districts">Ndola, Kitwe, Chingola, Mufulira, Luanshya</field>
+        </record>
+
+        <record id="zone_northern" model="sports.zone">
+            <field name="name">Northern Zone</field>
+            <field name="code">NZN</field>
+            <field name="province">Northern</field>
+            <field name="districts">Kasama, Mpika, Luwingu, Mbala</field>
+        </record>
+
+        <record id="zone_eastern" model="sports.zone">
+            <field name="name">Eastern Zone</field>
+            <field name="code">EZN</field>
+            <field name="province">Eastern</field>
+            <field name="districts">Chipata, Petauke, Katete, Lundazi</field>
+        </record>
+
+        <record id="zone_southern" model="sports.zone">
+            <field name="name">Southern Zone</field>
+            <field name="code">SZN</field>
+            <field name="province">Southern</field>
+            <field name="districts">Livingstone, Choma, Mazabuka, Monze</field>
+        </record>
+
+        <record id="zone_western" model="sports.zone">
+            <field name="name">Western Zone</field>
+            <field name="code">WZN</field>
+            <field name="province">Western</field>
+            <field name="districts">Mongu, Senanga, Kalabo, Shangombo</field>
+        </record>
+
+        <record id="zone_central" model="sports.zone">
+            <field name="name">Central Zone</field>
+            <field name="code">CZN</field>
+            <field name="province">Central</field>
+            <field name="districts">Kabwe, Mkushi, Mumbwa, Kapiri Mposhi</field>
+        </record>
+
+        <record id="zone_northwestern" model="sports.zone">
+            <field name="name">Northwestern Zone</field>
+            <field name="code">NWZ</field>
+            <field name="province">Northwestern</field>
+            <field name="districts">Solwezi, Mufumbwe, Kasempa, Zambezi</field>
+        </record>
+
+        <record id="zone_luapula" model="sports.zone">
+            <field name="name">Luapula Zone</field>
+            <field name="code">LPZ</field>
+            <field name="province">Luapula</field>
+            <field name="districts">Mansa, Samfya, Nchelenge, Kawambwa</field>
+        </record>
+
+        <record id="zone_muchinga" model="sports.zone">
+            <field name="name">Muchinga Zone</field>
+            <field name="code">MZN</field>
+            <field name="province">Muchinga</field>
+            <field name="districts">Chinsali, Isoka, Nakonde, Shiwang'andu</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Sequences -->
+    <record id="seq_youth_code" model="ir.sequence">
+        <field name="name">Youth Code Sequence</field>
+        <field name="code">youth.youth</field>
+        <field name="prefix">YTH</field>
+        <field name="padding">6</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <record id="seq_application_code" model="ir.sequence">
+        <field name="name">Youth Application Sequence</field>
+        <field name="code">youth.application</field>
+        <field name="prefix">APP</field>
+        <field name="padding">6</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <record id="seq_program_code" model="ir.sequence">
+        <field name="name">Youth Program Sequence</field>
+        <field name="code">youth.program</field>
+        <field name="prefix">PROG</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <record id="seq_organization_code" model="ir.sequence">
+        <field name="name">Youth Organization Sequence</field>
+        <field name="code">youth.organization</field>
+        <field name="prefix">ORG</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+
+    <!-- Sample Zones (Provinces) -->
+    <record id="zone_lusaka" model="youth.zone">
+        <field name="name">Lusaka Province</field>
+        <field name="zone_code">LSK</field>
+        <field name="zone_type">urban</field>
+        <field name="province">Lusaka</field>
+    </record>
+
+    <record id="zone_copperbelt" model="youth.zone">
+        <field name="name">Copperbelt Province</field>
+        <field name="zone_code">CPB</field>
+        <field name="zone_type">urban</field>
+        <field name="province">Copperbelt</field>
+    </record>
+
+    <record id="zone_southern" model="youth.zone">
+        <field name="name">Southern Province</field>
+        <field name="zone_code">STH</field>
+        <field name="zone_type">rural</field>
+        <field name="province">Southern</field>
+    </record>
+
+    <record id="zone_northern" model="youth.zone">
+        <field name="name">Northern Province</field>
+        <field name="zone_code">NTH</field>
+        <field name="zone_type">rural</field>
+        <field name="province">Northern</field>
+    </record>
+
+    <record id="zone_eastern" model="youth.zone">
+        <field name="name">Eastern Province</field>
+        <field name="zone_code">EST</field>
+        <field name="zone_type">rural</field>
+        <field name="province">Eastern</field>
+    </record>
+
+    <!-- Sample Youth Programs -->
+    <record id="program_skills_training" model="youth.program">
+        <field name="name">Youth Skills Training Program</field>
+        <field name="program_type">skills_training</field>
+        <field name="description">Comprehensive skills training program covering various vocational skills including tailoring, carpentry, welding, and computer literacy.</field>
+        <field name="start_date" eval="(DateTime.today() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+        <field name="end_date" eval="(DateTime.today() + relativedelta(months=7)).strftime('%Y-%m-%d')"/>
+                <field name="max_participants">75</field>
+        <field name="budget">75000.00</field>
+        <field name="status">planned</field>
+        <field name="zone_id" ref="zone_southern"/>
+        <field name="coordinator_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="program_empowerment" model="youth.program">
+        <field name="name">Youth Empowerment Initiative</field>
+        <field name="program_type">empowerment</field>
+        <field name="description">Leadership development and personal empowerment program for young people aged 18-35.</field>
+        <field name="start_date" eval="(DateTime.today() + relativedelta(days=15)).strftime('%Y-%m-%d')"/>
+        <field name="end_date" eval="(DateTime.today() + relativedelta(months=4)).strftime('%Y-%m-%d')"/>
+        <field name="max_participants">50</field>
+        <field name="budget">25000.00</field>
+        <field name="status">active</field>
+        <field name="zone_id" ref="zone_copperbelt"/>
+        <field name="coordinator_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="program_entrepreneurship" model="youth.program">
+        <field name="name">Young Entrepreneurs Development Program</field>
+        <field name="program_type">entrepreneurship</field>
+        <field name="description">Business development program for youth interested in starting their own businesses.</field>
+        <field name="start_date" eval="(DateTime.today() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+        <field name="end_date" eval="(DateTime.today() + relativedelta(months=8)).strftime('%Y-%m-%d')"/>
+        <field name="max_participants">50</field>
+        <field name="budget">50000.00</field>
+        <field name="status">planned</field>
+        <field name="zone_id" ref="zone_lusaka"/>
+        <field name="coordinator_id" ref="base.user_admin"/>
+    </record>
+
+    <!-- Sample Organizations -->
+    <record id="org_lusaka_youth_club" model="youth.organization">
+        <field name="name">Lusaka Youth Development Club</field>
+        <field name="organization_type">youth_club</field>
+        <field name="description">Community-based youth organization focused on skills development and community service.</field>
+        <field name="zone_id" ref="zone_lusaka"/>
+        <field name="registration_date" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-%m-%d')"/>
+        <field name="phone">+260977123456</field>
+        <field name="email">info@lusakayouthclub.org</field>
+        <field name="physical_address">Plot 123, Independence Avenue, Lusaka</field>
+        <field name="registration_status">certified</field>
+    </record>
+
+    <record id="org_copperbelt_entrepreneurs" model="youth.organization">
+        <field name="name">Copperbelt Young Entrepreneurs Network</field>
+        <field name="organization_type">cbo</field>
+        <field name="description">Network of young entrepreneurs in the Copperbelt region promoting business development.</field>
+        <field name="zone_id" ref="zone_copperbelt"/>
+        <field name="registration_date" eval="(DateTime.today() - relativedelta(months=8)).strftime('%Y-%m-%d')"/>
+        <field name="phone">+260966234567</field>
+        <field name="email">admin@cbyenetwork.org</field>
+        <field name="physical_address">Industrial Area, Ndola</field>
+        <field name="registration_status">certified</field>
+    </record>
+
+    <!-- Email Templates -->
+    <record id="email_template_application_submitted" model="mail.template">
+        <field name="name">Youth Application Submitted</field>
+        <field name="model_id" ref="model_youth_application"/>
+        <field name="subject">Application Submitted - ${object.name}</field>
+        <field name="email_from">${object.company_id.email or ''}</field>
+        <field name="email_to">${object.youth_id.email}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear ${object.youth_id.name},</p>
+                <p>Your application <strong>${object.name}</strong> has been successfully submitted and is now under review.</p>
+                <p><strong>Application Details:</strong></p>
+                <ul>
+                    <li>Application Type: ${object.application_type}</li>
+                    <li>Amount Requested: ${object.amount_requested} ZMW</li>
+                    <li>Submission Date: ${object.submission_date}</li>
+                </ul>
+                <p>You will be notified of any updates on your application status.</p>
+                <p>Thank you for your interest in our youth programs.</p>
+                <br/>
+                <p>Best regards,<br/>Ministry of Youth, Sport and Arts</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="email_template_application_approved" model="mail.template">
+        <field name="name">Youth Application Approved</field>
+        <field name="model_id" ref="model_youth_application"/>
+        <field name="subject">Application Approved - ${object.name}</field>
+        <field name="email_from">${object.company_id.email or ''}</field>
+        <field name="email_to">${object.youth_id.email}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear ${object.youth_id.name},</p>
+                <p>Congratulations! Your application <strong>${object.name}</strong> has been approved.</p>
+                <p><strong>Approved Details:</strong></p>
+                <ul>
+                    <li>Approved Amount: ${object.amount_approved} ZMW</li>
+                    <li>Approval Date: ${object.final_approval_date}</li>
+                </ul>
+                <p>The disbursement process will begin soon. You will receive further instructions regarding the next steps.</p>
+                <p>Congratulations once again!</p>
+                <br/>
+                <p>Best regards,<br/>Ministry of Youth, Sport and Arts</p>
+            </div>
+        </field>
+    </record>
+
+</odoo>
