@@ -36,6 +36,9 @@
         # Views
         'views/actions.xml',
         'views/artist_views.xml',
+        'views/association_views.xml',
+        'views/performance_views.xml',
+        'views/achievement_views.xml',
         'views/menu.xml',
     ],
     'installable': True,

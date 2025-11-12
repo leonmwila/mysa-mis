@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Artist Association Form View -->
+    <record id="view_artist_association_form" model="ir.ui.view">
+        <field name="name">artist.association.form</field>
+        <field name="model">artist.association</field>
+        <field name="arch" type="xml">
+            <form string="Artist Association">
+                <header>
+                    <field name="legal_status" widget="statusbar" statusbar_visible="pending,registered"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_members" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="member_count" widget="statinfo" string="Members"/>
+                        </button>
+                    </div>
+                    
+                    <field name="logo" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Association Name" required="1"/>
+                        </h1>
+                        <h3>
+                            <field name="acronym" placeholder="Acronym (Optional)"/>
+                        </h3>
+                        <div>
+                            <field name="association_id" readonly="1"/>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group string="Basic Information">
+                            <field name="association_type" required="1"/>
+                            <field name="art_focus" required="1"/>
+                            <field name="registration_date"/>
+                            <field name="registration_number"/>
+                        </group>
+                        <group string="Location &amp; Contact">
+                            <field name="zone_id" required="1"/>
+                            <field name="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="website" widget="url"/>
+                        </group>
+                    </group>
+
+                    <group string="Address">
+                        <field name="headquarters_address" nolabel="1" placeholder="Enter full address..."/>
+                    </group>
+
+                    <group string="Description">
+                        <field name="description" nolabel="1" placeholder="Describe the association's mission and activities..."/>
+                    </group>
+
+                    <notebook>
+                        <page string="Leadership">
+                            <group>
+                                <group string="Executive Committee">
+                                    <field name="president_id"/>
+                                    <field name="vice_president_id"/>
+                                    <field name="secretary_id"/>
+                                    <field name="treasurer_id"/>
+                                </group>
+                                <group string="Ministry Contact">
+                                    <field name="coordinator_id"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Members">
+                            <field name="member_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="stage_name"/>
+                                    <field name="art_category"/>
+                                    <field name="phone"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                        
+                        <page string="Activities &amp; Programs">
+                            <group>
+                                <field name="activities" nolabel="1" placeholder="Describe main activities and programs..."/>
+                            </group>
+                            <group>
+                                <group string="Schedule">
+                                    <field name="meeting_schedule"/>
+                                    <field name="next_meeting_date"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Artist Association Tree View -->
+    <record id="view_artist_association_tree" model="ir.ui.view">
+        <field name="name">artist.association.tree</field>
+        <field name="model">artist.association</field>
+        <field name="arch" type="xml">
+            <list string="Artist Associations">
+                <field name="name"/>
+                <field name="acronym"/>
+                <field name="association_type"/>
+                <field name="art_focus"/>
+                <field name="zone_id"/>
+                <field name="member_count"/>
+                <field name="legal_status" widget="badge" decoration-success="legal_status == 'registered'" decoration-warning="legal_status == 'pending'"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Artist Association Kanban View -->
+    <record id="view_artist_association_kanban" model="ir.ui.view">
+        <field name="name">artist.association.kanban</field>
+        <field name="model">artist.association</field>
+        <field name="arch" type="xml">
+            <kanban create="1" edit="1" delete="1">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="acronym"/>
+                <field name="association_type"/>
+                <field name="art_focus"/>
+                <field name="member_count"/>
+                <field name="legal_status"/>
+                <field name="logo"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_image">
+                                    <img t-if="record.logo.value" t-att-src="'/web/image/artist.association/' + record.id.raw_value + '/logo'" alt="Logo" class="o_kanban_image_small"/>
+                                    <i t-else="" class="fa fa-users fa-3x text-muted"/>
+                                </div>
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div class="o_kanban_record_subtitle" t-if="record.acronym.value">
+                                    <field name="acronym"/>
+                                </div>
+                                <div>
+                                    <span class="badge badge-info"><field name="association_type"/></span>
+                                    <span class="badge badge-primary"><field name="art_focus"/></span>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-pill">
+                                            <i class="fa fa-users"/> <t t-esc="record.member_count.value"/> Members
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span class="badge badge-success" t-if="record.legal_status.raw_value == 'registered'">Registered</span>
+                                        <span class="badge badge-warning" t-if="record.legal_status.raw_value == 'pending'">Pending</span>
+                                        <span class="badge badge-secondary" t-if="record.legal_status.raw_value == 'informal'">Informal</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Artist Association Search View -->
+    <record id="view_artist_association_search" model="ir.ui.view">
+        <field name="name">artist.association.search</field>
+        <field name="model">artist.association</field>
+        <field name="arch" type="xml">
+            <search string="Artist Associations">
+                <field name="name"/>
+                <field name="acronym"/>
+                <field name="zone_id"/>
+                
+                <filter name="registered" string="Registered" domain="[('legal_status', '=', 'registered')]"/>
+                <filter name="pending" string="Pending Registration" domain="[('legal_status', '=', 'pending')]"/>
+                <filter name="active" string="Active" domain="[('status', '=', 'active')]"/>
+                
+                <separator/>
+                <filter name="professional" string="Professional Associations" domain="[('association_type', '=', 'professional')]"/>
+                <filter name="cultural" string="Cultural Groups" domain="[('association_type', '=', 'cultural')]"/>
+                
+                <group>
+                    <filter name="group_type" string="Association Type" context="{'group_by': 'association_type'}"/>
+                    <filter name="group_art_focus" string="Art Focus" context="{'group_by': 'art_focus'}"/>
+                    <filter name="group_zone" string="Zone" context="{'group_by': 'zone_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

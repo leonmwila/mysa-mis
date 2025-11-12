@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Artist Achievement Form View -->
+    <record id="view_artist_achievement_form" model="ir.ui.view">
+        <field name="name">artist.achievement.form</field>
+        <field name="model">artist.achievement</field>
+        <field name="arch" type="xml">
+            <form string="Artist Achievement">
+                <header>
+                    <field name="verification_status" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Achievement/Award Name" required="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group name="basic_info" string="Basic Information">
+                            <field name="artist_id" required="1"/>
+                            <field name="achievement_date" required="1"/>
+                            <field name="achievement_type" required="1"/>
+                            <field name="achievement_level" required="1"/>
+                        </group>
+                        <group name="details" string="Details">
+                            <field name="issuing_organization"/>
+                            <field name="event_competition_name"/>
+                            <field name="location"/>
+                            <field name="position"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" placeholder="Describe the achievement..." nolabel="1"/>
+                        </page>
+                        <page string="Additional Information" name="additional">
+                            <group>
+                                <group>
+                                    <field name="achievement_category"/>
+                                    <field name="competition_level"/>
+                                    <field name="prize_value"/>
+                                </group>
+                                <group>
+                                    <field name="certificate_received"/>
+                                    <field name="trophy_medal"/>
+                                    <field name="public_display"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Artist Achievement Kanban View -->
+        <!-- Achievement Kanban View -->
+    <record id="view_artist_achievement_kanban" model="ir.ui.view">
+        <field name="name">artist.achievement.kanban</field>
+        <field name="model">artist.achievement</field>
+        <field name="arch" type="xml">
+            <kanban create="1" edit="1" delete="1">
+                <field name="name"/>
+                <field name="artist_id"/>
+                <field name="achievement_date"/>
+                <field name="achievement_type"/>
+                <field name="achievement_level"/>
+                <field name="position"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_title">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="artist_id"/> • <field name="achievement_date"/>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <span class="badge badge-info"><field name="achievement_type"/></span>
+                                    <span class="badge badge-primary"><field name="achievement_level"/></span>
+                                    <span class="badge badge-success" t-if="record.position.raw_value"><field name="position"/></span>
+                                 </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <!-- Artist Achievement List View -->
+    <record id="view_artist_achievement_tree" model="ir.ui.view">
+        <field name="name">artist.achievement.tree</field>
+        <field name="model">artist.achievement</field>
+        <field name="arch" type="xml">
+            <list string="Artist Achievements" create="1" edit="1" delete="1">
+                <field name="achievement_date"/>
+                <field name="name"/>
+                <field name="artist_id"/>
+                <field name="achievement_type"/>
+                <field name="achievement_level"/>
+                <field name="position"/>
+                <field name="issuing_organization"/>
+            </list>
+        </field>
+    </record>
+</odoo>
