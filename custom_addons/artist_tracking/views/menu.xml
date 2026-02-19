@@ -6,6 +6,13 @@
               sequence="4"
               web_icon="artist_tracking,static/description/icon.png"/>
 
+    <!-- Dashboard Menu (Top Level for quick access) -->
+    <menuitem id="menu_artist_dashboard_main" 
+              name="Dashboard" 
+              parent="menu_artist_tracking_root" 
+              action="action_artist_dashboard" 
+              sequence="5"/>
+
     <!-- Artist Management Menu -->
     <menuitem id="menu_artist_management" 
               name="Artist Management" 
@@ -19,26 +26,12 @@
               action="action_artist" 
               sequence="10"/>
 
-    <!-- Associations Menu -->
-    <menuitem id="menu_associations" 
-              name="Associations" 
-              parent="menu_artist_management" 
-              action="action_artist_association" 
-              sequence="20"/>
-
     <!-- Zones Menu -->
     <menuitem id="menu_zones" 
               name="Zones" 
               parent="menu_artist_management" 
               action="action_artist_zone" 
               sequence="30"/>
-
-    <!-- Venues Menu -->
-    <menuitem id="menu_venues" 
-              name="Venues" 
-              parent="menu_artist_management" 
-              action="action_artist_venue" 
-              sequence="40"/>
 
     <!-- Performance Management Menu -->
     <menuitem id="menu_performance_management" 

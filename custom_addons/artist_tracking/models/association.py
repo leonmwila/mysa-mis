@@ -150,7 +150,20 @@ class ArtistAssociation(models.Model):
                 if 'association_id' not in vals or not vals['association_id']:
                     vals['association_id'] = self.env['ir.sequence'].next_by_code('artist.association') or 'ASSOC000'
         
-        return super(ArtistAssociation, self).create(vals_list)
+        records = super(ArtistAssociation, self).create(vals_list)
+        records._sync_member_zones()
+        return records
+
+    def write(self, vals):
+        result = super().write(vals)
+        if 'member_ids' in vals or 'zone_id' in vals:
+            self._sync_member_zones()
+        return result
+
+    def _sync_member_zones(self):
+        for record in self:
+            if record.zone_id and record.member_ids:
+                record.member_ids.write({'zone_id': record.zone_id.id})
 
     def action_view_members(self):
         """Action to view association members"""

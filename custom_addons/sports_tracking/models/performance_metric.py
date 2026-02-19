@@ -31,6 +31,7 @@ class SportsPerformanceMetric(models.Model):
     
     # Context
     date = fields.Date(string='Date Recorded', required=True, default=fields.Date.today)
+    venue_id = fields.Many2one('artist.venue', string='Venue')
     location = fields.Char(string='Location')
     competition_level = fields.Selection([
         ('training', 'Training'),
@@ -111,6 +112,11 @@ class SportsPerformanceMetric(models.Model):
             else:
                 # First record is automatically a personal best
                 record.is_personal_best = True
+
+    @api.onchange('venue_id')
+    def _onchange_venue_id(self):
+        if self.venue_id:
+            self.location = self.venue_id.name
 
     def action_verify(self):
         """Verify the performance metric"""

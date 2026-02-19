@@ -35,22 +35,73 @@ class ArtistZone(models.Model):
     
     # Statistics
     artist_ids = fields.One2many('artist.artist', 'zone_id', string='Artists')
+    artist_selection_ids = fields.Many2many(
+        'artist.artist',
+        string='Artists',
+        compute='_compute_artist_selection_ids',
+        inverse='_inverse_artist_selection_ids',
+    )
     artist_count = fields.Integer('Number of Artists', compute='_compute_artist_count', store=True)
-    association_ids = fields.One2many('artist.association', 'zone_id', string='Associations')
+    common_association_ids = fields.Many2many(
+        'common.association',
+        'artist_zone_common_association_rel',
+        'zone_id',
+        'association_id',
+        string='Associations/Organizations',
+        domain=[('is_arts', '=', True)],
+    )
     association_count = fields.Integer('Number of Associations', compute='_compute_association_count', store=True)
     
     # Cultural Centers and Venues
     venue_ids = fields.One2many('artist.venue', 'zone_id', string='Cultural Venues')
+    venue_selection_ids = fields.Many2many(
+        'artist.venue',
+        string='Cultural Venues',
+        compute='_compute_venue_selection_ids',
+        inverse='_inverse_venue_selection_ids',
+    )
+
+    @api.depends('artist_ids')
+    def _compute_artist_selection_ids(self):
+        for record in self:
+            record.artist_selection_ids = record.artist_ids
+
+    def _inverse_artist_selection_ids(self):
+        for record in self:
+            selected_artists = record.artist_selection_ids
+            selected_artists.write({'zone_id': record.id})
+            removed_artists = self.env['artist.artist'].search([
+                ('zone_id', '=', record.id),
+                ('id', 'not in', selected_artists.ids),
+            ])
+            if removed_artists:
+                removed_artists.write({'zone_id': False})
+
+    @api.depends('venue_ids')
+    def _compute_venue_selection_ids(self):
+        for record in self:
+            record.venue_selection_ids = record.venue_ids
+
+    def _inverse_venue_selection_ids(self):
+        for record in self:
+            selected_venues = record.venue_selection_ids
+            selected_venues.write({'zone_id': record.id})
+            removed_venues = self.env['artist.venue'].search([
+                ('zone_id', '=', record.id),
+                ('id', 'not in', selected_venues.ids),
+            ])
+            if removed_venues:
+                removed_venues.write({'zone_id': False})
     
     @api.depends('artist_ids')
     def _compute_artist_count(self):
         for record in self:
             record.artist_count = len(record.artist_ids)
 
-    @api.depends('association_ids')
+    @api.depends('common_association_ids')
     def _compute_association_count(self):
         for record in self:
-            record.association_count = len(record.association_ids)
+            record.association_count = len(record.common_association_ids)
 
     def action_view_artists(self):
         """Action to view zone's artists"""
@@ -68,59 +119,20 @@ class ArtistZone(models.Model):
         return {
             'name': f'Associations in {self.name}',
             'type': 'ir.actions.act_window',
-            'res_model': 'artist.association',
+            'res_model': 'common.association',
             'view_mode': 'tree,form',
-            'domain': [('zone_id', '=', self.id)],
-            'context': {'default_zone_id': self.id}
+            'domain': [('id', 'in', self.common_association_ids.ids)],
+            'context': {'default_is_arts': True}
         }
 
 
-class ArtistVenue(models.Model):
-    _name = 'artist.venue'
-    _description = 'Cultural Venues and Performance Spaces'
-    _rec_name = 'name'
+class ArtistVenueExtension(models.Model):
+    _inherit = 'artist.venue'
 
-    name = fields.Char('Venue Name', required=True)
-    venue_type = fields.Selection([
-        ('theater', 'Theater'),
-        ('gallery', 'Art Gallery'),
-        ('concert_hall', 'Concert Hall'),
-        ('studio', 'Studio'),
-        ('community_center', 'Community Center'),
-        ('outdoor_space', 'Outdoor Space'),
-        ('museum', 'Museum'),
-        ('cultural_center', 'Cultural Center'),
-        ('other', 'Other')
-    ], string='Venue Type', required=True)
-    
-    # Location
-    zone_id = fields.Many2one('artist.zone', string='Zone', required=True)
-    address = fields.Text('Address')
-    capacity = fields.Integer('Capacity')
-    
-    # Contact and Management
-    manager_name = fields.Char('Manager Name')
-    manager_phone = fields.Char('Manager Phone')
-    manager_email = fields.Char('Manager Email')
-    
-    # Facilities and Equipment
-    facilities = fields.Text('Available Facilities')
-    equipment = fields.Text('Available Equipment')
-    accessibility = fields.Boolean('Wheelchair Accessible')
-    parking_available = fields.Boolean('Parking Available')
-    
-    # Booking and Availability
-    booking_required = fields.Boolean('Booking Required', default=True)
-    booking_contact = fields.Char('Booking Contact')
-    rental_rate = fields.Float('Rental Rate per Hour')
-    
-    # Status
-    active = fields.Boolean('Active', default=True)
-    
-    # Statistics
+    zone_id = fields.Many2one('artist.zone', string='Zone')
     performance_ids = fields.One2many('artist.performance.metric', 'venue_id', string='Performances')
     performance_count = fields.Integer('Number of Performances', compute='_compute_performance_count', store=True)
-    
+
     @api.depends('performance_ids')
     def _compute_performance_count(self):
         for record in self:

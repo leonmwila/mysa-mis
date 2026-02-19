@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_common_association_form" model="ir.ui.view">
+        <field name="name">common.association.form</field>
+        <field name="model">common.association</field>
+        <field name="arch" type="xml">
+            <form string="Association / Organization">
+                <header>
+                    <button name="action_approve_certify"
+                            string="Approve / Certify"
+                            type="object"
+                            class="btn-primary"
+                            invisible="status == 'registered'"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Basic Information">
+                            <field name="code"/>
+                            <field name="entity_kind" required="1"/>
+                            <field name="status"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Usage Domains">
+                            <field name="is_sports"/>
+                            <field name="is_arts"/>
+                            <field name="is_youth"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Domain Details">
+                            <field name="sports_type" invisible="not is_sports"/>
+                            <field name="art_focus" invisible="not is_arts"/>
+                            <field name="organization_type" invisible="not is_youth"/>
+                        </group>
+                        <group string="Contact Information">
+                            <field name="contact_person"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="website"/>
+                        </group>
+                    </group>
+
+                    <group string="Address">
+                        <field name="address" nolabel="1"/>
+                    </group>
+
+                    <group string="Registration">
+                        <field name="registration_number"/>
+                        <field name="approved_by_id" readonly="1"/>
+                        <field name="approved_date" readonly="1"/>
+                    </group>
+
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_common_association_tree" model="ir.ui.view">
+        <field name="name">common.association.tree</field>
+        <field name="model">common.association</field>
+        <field name="arch" type="xml">
+            <list string="Associations &amp; Organizations">
+                <field name="name"/>
+                <field name="status" string="Organization Status" widget="badge"/>
+                <field name="entity_kind"/>
+                <field name="is_sports"/>
+                <field name="is_arts"/>
+                <field name="is_youth"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_common_association_search" model="ir.ui.view">
+        <field name="name">common.association.search</field>
+        <field name="model">common.association</field>
+        <field name="arch" type="xml">
+            <search string="Associations &amp; Organizations">
+                <field name="name"/>
+                <field name="entity_kind"/>
+                <filter name="sports" string="Sports" domain="[('is_sports', '=', True)]"/>
+                <filter name="arts" string="Arts" domain="[('is_arts', '=', True)]"/>
+                <filter name="youth" string="Youth" domain="[('is_youth', '=', True)]"/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                <group>
+                    <filter name="group_kind" string="Type" context="{'group_by': 'entity_kind'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_common_association" model="ir.actions.act_window">
+        <field name="name">Associations &amp; Organizations</field>
+        <field name="res_model">common.association</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first association or organization!
+            </p>
+            <p>
+                Manage shared entities used across Sports, Arts, and Youth modules.
+            </p>
+        </field>
+    </record>
+</odoo>

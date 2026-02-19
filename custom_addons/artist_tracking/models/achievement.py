@@ -47,6 +47,7 @@ class ArtistAchievement(models.Model):
     # Issuing Organization/Event
     issuing_organization = fields.Char('Issuing Organization', tracking=True)
     event_competition_name = fields.Char('Event/Competition Name', tracking=True)
+    venue_id = fields.Many2one('artist.venue', string='Location', tracking=True)
     location = fields.Char('Location', tracking=True)
     
     # Level and Scope
@@ -183,6 +184,13 @@ class ArtistAchievement(models.Model):
     def _onchange_artist_id(self):
         if self.artist_id:
             self.art_category = self.artist_id.art_category
+
+    @api.onchange('venue_id')
+    def _onchange_venue_id(self):
+        if self.venue_id:
+            self.location = self.venue_id.name
+        else:
+            self.location = False
 
     def action_verify_achievement(self):
         """Verify the achievement"""

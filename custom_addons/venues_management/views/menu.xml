@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_shared_venue_root"
+              name="Venues"
+              sequence="45"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_shared_venues"
+              name="Venue Registry"
+              parent="menu_shared_venue_root"
+              action="action_shared_venue"
+              sequence="10"/>
+</odoo>

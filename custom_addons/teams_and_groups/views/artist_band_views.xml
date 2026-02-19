@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Artist Band Form View -->
+    <record id="view_artist_band_form" model="ir.ui.view">
+        <field name="name">artist.band.form</field>
+        <field name="model">artist.band</field>
+        <field name="arch" type="xml">
+            <form string="Artist Band/Group">
+                <header>
+                    <button name="%(artist_tracking.action_artist)d" type="action" string="View Members" 
+                            context="{'search_default_band_ids': id}" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,inactive,disbanded"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_achievements" type="object" class="oe_stat_button" icon="fa-trophy">
+                            <field name="achievement_count" widget="statinfo" string="Achievements"/>
+                        </button>
+                        <button name="action_view_members" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="member_count" widget="statinfo" string="Members"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="band_id" readonly="1"/>
+                            <field name="art_category" required="1"/>
+                            <field name="band_type"/>
+                            <field name="formation_date"/>
+                            <field name="zone_id"/>
+                            <field name="location"/>
+                        </group>
+                        <group>
+                            <field name="common_association_id"/>
+                            <field name="leader_id"/>
+                            <field name="manager_name"/>
+                            <field name="manager_contact"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" placeholder="Band/group description..."/>
+                        </page>
+                        <page string="Band Members" name="members">
+                            <field name="member_ids" nolabel="1" context="{'default_band_ids': [(4, id)]}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="email"/>
+                                    <field name="phone"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Events" name="events">
+                            <field name="event_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="location"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Achievements" name="achievements">
+                            <field name="achievement_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="achievement_type"/>
+                                    <field name="award_type"/>
+                                    <field name="position"/>
+                                    <field name="achievement_date"/>
+                                    <field name="achievement_level"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="name"/>
+                                                <field name="achievement_type"/>
+                                                <field name="award_type"/>
+                                                <field name="position"/>
+                                                <field name="achievement_date"/>
+                                            </group>
+                                            <group>
+                                                <field name="achievement_level"/>
+                                                <field name="location"/>
+                                                <field name="event_competition_name"/>
+                                                <field name="verified"/>
+                                            </group>
+                                        </group>
+                                        <group>
+                                            <field name="description"/>
+                                        </group>
+                                        <group>
+                                            <field name="member_achievement_ids" readonly="1">
+                                                <list>
+                                                    <field name="artist_id"/>
+                                                    <field name="achievement_type"/>
+                                                    <field name="achievement_date"/>
+                                                </list>
+                                            </field>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Artist Band List View -->
+    <record id="view_artist_band_tree" model="ir.ui.view">
+        <field name="name">artist.band.list</field>
+        <field name="model">artist.band</field>
+        <field name="arch" type="xml">
+            <list string="Artist Bands/Groups">
+                <field name="name"/>
+                <field name="band_id"/>
+                <field name="art_category"/>
+                <field name="band_type"/>
+                <field name="member_count"/>
+                <field name="achievement_count"/>
+                <field name="zone_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'active'" 
+                       decoration-muted="state == 'inactive'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Artist Band Search View -->
+    <record id="view_artist_band_search" model="ir.ui.view">
+        <field name="name">artist.band.search</field>
+        <field name="model">artist.band</field>
+        <field name="arch" type="xml">
+            <search string="Search Artist Bands/Groups">
+                <field name="name" string="Band/Group Name"/>
+                <field name="band_id" string="Band ID"/>
+                <field name="art_category"/>
+                <field name="band_type"/>
+                <field name="zone_id"/>
+                <field name="common_association_id"/>
+                <field name="leader_id"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Active Bands" name="state_active" domain="[('state', '=', 'active')]"/>
+                <filter string="Inactive Bands" name="state_inactive" domain="[('state', '=', 'inactive')]"/>
+                <group>
+                    <filter string="Art Category" name="group_art_category" context="{'group_by': 'art_category'}"/>
+                    <filter string="Band Type" name="group_band_type" context="{'group_by': 'band_type'}"/>
+                    <filter string="Zone" name="group_zone" context="{'group_by': 'zone_id'}"/>
+                    <filter string="Association" name="group_association" context="{'group_by': 'common_association_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Artist Band Kanban View -->
+    <record id="view_artist_band_kanban" model="ir.ui.view">
+        <field name="name">artist.band.kanban</field>
+        <field name="model">artist.band</field>
+        <field name="arch" type="xml">
+            <kanban default_order="name" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="art_category"/>
+                <field name="band_type"/>
+                <field name="member_count"/>
+                <field name="achievement_count"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div>
+                                        <i class="fa fa-music"/> <field name="art_category"/>
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-users"/> <field name="member_count"/> Members
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-trophy"/> <field name="achievement_count"/> Achievements
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Artist Band Action -->
+    <record id="action_artist_band" model="ir.actions.act_window">
+        <field name="name">Artist Bands/Groups</field>
+        <field name="res_model">artist.band</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Artist Band or Group!
+            </p>
+            <p>
+                Track artist bands/groups, their members, and achievements.
+            </p>
+        </field>
+    </record>
+
+</odoo>
+

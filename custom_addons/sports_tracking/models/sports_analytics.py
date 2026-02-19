@@ -28,6 +28,7 @@ class SportsAnalytics(models.TransientModel):
     
     zone_id = fields.Many2one('sports.zone', string='Zone')
     association_id = fields.Many2one('sports.association', string='Association')
+    common_association_id = fields.Many2one('common.association', string='Association/Organization')
     
     # Computed Analytics
     total_athletes = fields.Integer(string='Total Athletes', compute='_compute_analytics')
@@ -45,13 +46,13 @@ class SportsAnalytics(models.TransientModel):
     avg_performance_improvement = fields.Float(string='Avg Performance Improvement (%)', compute='_compute_analytics')
     top_performing_zone = fields.Char(string='Top Performing Zone', compute='_compute_analytics')
     
-    @api.depends('date_from', 'date_to', 'sport_type', 'zone_id', 'association_id')
+    @api.depends('date_from', 'date_to', 'sport_type', 'zone_id', 'common_association_id')
     def _compute_analytics(self):
         for record in self:
             # Build domain for filtering
             athlete_domain = []
             achievement_domain = []
-            association_domain = [('active', '=', True)]
+            association_domain = [('active', '=', True), ('is_sports', '=', True)]
             
             if record.sport_type and record.sport_type != 'all':
                 athlete_domain.append(('primary_sport', '=', record.sport_type))
@@ -59,10 +60,10 @@ class SportsAnalytics(models.TransientModel):
             
             if record.zone_id:
                 athlete_domain.append(('zone_id', '=', record.zone_id.id))
-                association_domain.append(('zone_id', '=', record.zone_id.id))
+                association_domain.append(('id', 'in', record.zone_id.common_association_ids.ids))
             
-            if record.association_id:
-                athlete_domain.append(('association_id', '=', record.association_id.id))
+            if record.common_association_id:
+                athlete_domain.append(('common_association_ids', 'in', [record.common_association_id.id]))
             
             if record.date_from and record.date_to:
                 achievement_domain.extend([
@@ -76,7 +77,7 @@ class SportsAnalytics(models.TransientModel):
             record.active_athletes = len(athletes.filtered(lambda x: x.athlete_status == 'active'))
             
             # Get associations
-            associations = self.env['sports.association'].search(association_domain)
+            associations = self.env['common.association'].search(association_domain)
             record.total_associations = len(associations)
             
             # Get achievements
@@ -196,7 +197,7 @@ class SportsAnalytics(models.TransientModel):
                 'zone_name': zone.name,
                 'total_athletes': len(athletes),
                 'active_athletes': len(athletes.filtered(lambda x: x.athlete_status == 'active')),
-                'associations': len(zone.association_ids),
+                'associations': len(zone.common_association_ids),
                 'achievements': len(self.env['sports.achievement'].search([
                     ('athlete_id', 'in', athletes.ids),
                     ('verified', '=', True)

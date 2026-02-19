@@ -76,8 +76,29 @@ class SportsAthlete(models.Model):
     ], string='Playing Level', default='amateur')
     
     # Association and Location (for athletes)
-    association_id = fields.Many2one('sports.association', string='Sports Association')
-    zone_id = fields.Many2one('sports.zone', string='Zone', related='association_id.zone_id', store=True)
+    association_ids = fields.Many2many(
+        'sports.association',
+        'sports_association_athlete_rel',
+        'athlete_id',
+        'association_id',
+        string='Sports Associations'
+    )
+    common_association_ids = fields.Many2many(
+        'common.association',
+        'sports_athlete_common_association_rel',
+        'athlete_id',
+        'association_id',
+        string='Associations/Organizations'
+    )
+    # Keep association_id for backward compatibility and as a computed field
+    association_id = fields.Many2one('sports.association', string='Primary Association', compute='_compute_primary_association', store=True)
+    common_primary_association_id = fields.Many2one(
+        'common.association',
+        string='Primary Association/Organization',
+        compute='_compute_common_primary_association',
+        store=False
+    )
+    zone_id = fields.Many2one('sports.zone', string='Zone', compute='_compute_zone_id', store=True)
     district = fields.Char(string='District')
     
     # Career Information
@@ -173,6 +194,31 @@ class SportsAthlete(models.Model):
                 record.years_active = today.year - record.career_start_date.year
             else:
                 record.years_active = 0
+
+    @api.depends('association_ids')
+    def _compute_primary_association(self):
+        """Set the first association as primary for backward compatibility"""
+        for record in self:
+            if record.association_ids:
+                record.association_id = record.association_ids[0]
+            else:
+                record.association_id = False
+
+    @api.depends('common_association_ids')
+    def _compute_common_primary_association(self):
+        for record in self:
+            record.common_primary_association_id = record.common_association_ids[:1]
+    
+    @api.depends('association_id', 'association_ids')
+    def _compute_zone_id(self):
+        """Compute zone from primary association"""
+        for record in self:
+            if record.association_id:
+                record.zone_id = record.association_id.zone_id
+            elif record.association_ids:
+                record.zone_id = record.association_ids[0].zone_id
+            else:
+                record.zone_id = False
 
     @api.depends('achievement_ids')
     def _compute_athlete_statistics(self):

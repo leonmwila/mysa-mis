@@ -92,10 +92,20 @@ class YouthProgram(models.Model):
         string='Venue/Location',
         help='Physical location where program is conducted'
     )
+    venue_id = fields.Many2one(
+        'artist.venue',
+        string='Venue',
+        help='Select a venue from the shared venue registry'
+    )
     organizing_body_id = fields.Many2one(
         'youth.organization',
         string='Organizing Body',
         help='Organization responsible for implementing the program'
+    )
+    common_organizing_body_id = fields.Many2one(
+        'common.association',
+        string='Organizing Body',
+        help='Shared association/organization responsible for implementing the program'
     )
     
     # Participation & Capacity
@@ -263,6 +273,11 @@ class YouthProgram(models.Model):
                 record.cost_per_participant = record.budget / record.current_participants
             else:
                 record.cost_per_participant = 0.0
+
+    @api.onchange('venue_id')
+    def _onchange_venue_id(self):
+        if self.venue_id:
+            self.venue = self.venue_id.name
 
     def _compute_completion_stats(self):
         """Compute completion and graduation rates"""

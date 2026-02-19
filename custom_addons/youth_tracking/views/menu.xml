@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Youth Dashboard Action -->
+    <!-- Dashboard Action -->
+    <record id="action_youth_dashboard_analytics" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">youth.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'form_view_initial_mode': 'readonly'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Youth Tracking Dashboard
+            </p>
+            <p>
+                View comprehensive analytics and insights about youth programs, applications, and demographics.
+            </p>
+        </field>
+    </record>
+
+    <!-- Youth List Action -->
     <record id="action_youth_dashboard" model="ir.actions.act_window">
         <field name="name">Youth Dashboard</field>
         <field name="res_model">youth.youth</field>
@@ -82,7 +99,7 @@
     <menuitem id="menu_youth_dashboard" 
               name="Dashboard" 
               parent="menu_youth_main" 
-              action="action_youth_dashboard" 
+              action="action_youth_dashboard_analytics" 
               sequence="1"/>
 
     <!-- Youth Management Menu -->
@@ -120,12 +137,6 @@
               parent="menu_youth_programs" 
               action="action_youth_program" 
               sequence="1"/>
-
-    <menuitem id="menu_youth_organizations" 
-              name="Organizations" 
-              parent="menu_youth_programs" 
-              action="action_youth_organization" 
-              sequence="2"/>
 
     <!-- Configuration Menu -->
     <menuitem id="menu_youth_configuration" 

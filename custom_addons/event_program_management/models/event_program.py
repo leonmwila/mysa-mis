@@ -29,6 +29,7 @@ class EventProgram(models.Model):
     ], string='Age Group')
     start_date = fields.Date(string='Start Date')
     end_date = fields.Date(string='End Date')
+    venue_id = fields.Many2one('artist.venue', string='Venue')
     location = fields.Char(string='Location')
     coordinator_id = fields.Many2one('res.users', string='Coordinator')
     # organizer_association_id = fields.Many2one('sports.association', string='Organizing Association')
@@ -62,3 +63,8 @@ class EventProgram(models.Model):
     @api.model
     def complete_event(self):
         self.state = 'completed'
+
+    @api.onchange('venue_id')
+    def _onchange_venue_id(self):
+        if self.venue_id:
+            self.location = self.venue_id.name

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_assoc_org_root"
+              name="Associations &amp; Organizations"
+              sequence="12"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_assoc_org_registry"
+              name="Registry"
+              parent="menu_assoc_org_root"
+              action="action_common_association"
+              sequence="10"/>
+</odoo>

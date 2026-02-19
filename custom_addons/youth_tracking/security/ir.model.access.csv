@@ -31,6 +31,11 @@ access_youth_analytics_officer,youth.analytics.officer,model_youth_analytics,gro
 access_youth_analytics_pydc,youth.analytics.pydc,model_youth_analytics,group_youth_pydc,1,0,0,0
 access_youth_analytics_admin,youth.analytics.admin,model_youth_analytics,group_youth_admin,1,0,0,0
 
+access_youth_dashboard_user,youth.dashboard.user,model_youth_dashboard,base.group_user,1,1,1,0
+access_youth_dashboard_officer,youth.dashboard.officer,model_youth_dashboard,group_youth_officer,1,1,1,0
+access_youth_dashboard_pydc,youth.dashboard.pydc,model_youth_dashboard,group_youth_pydc,1,1,1,0
+access_youth_dashboard_admin,youth.dashboard.admin,model_youth_dashboard,group_youth_admin,1,1,1,0
+
 access_youth_achievement_user,youth.achievement.user,model_youth_achievement,base.group_user,1,0,0,0
 access_youth_achievement_officer,youth.achievement.officer,model_youth_achievement,group_youth_officer,1,1,1,0
 access_youth_achievement_admin,youth.achievement.admin,model_youth_achievement,group_youth_admin,1,1,1,1

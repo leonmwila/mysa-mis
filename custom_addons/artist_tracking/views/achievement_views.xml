@@ -25,8 +25,8 @@
                         </group>
                         <group name="details" string="Details">
                             <field name="issuing_organization"/>
-                            <field name="event_competition_name"/>
-                            <field name="location"/>
+                            <field name="event_program_id" string="Event/Competition Name" options="{'no_create': True}"/>
+                            <field name="venue_id" string="Location" options="{'no_create': True}"/>
                             <field name="position"/>
                         </group>
                     </group>

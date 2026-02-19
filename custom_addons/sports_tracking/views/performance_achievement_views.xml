@@ -40,6 +40,7 @@
                             <field name="athlete_id" required="1" options="{'no_create': True}"/>
                             <field name="event_name"/>
                             <field name="date" required="1"/>
+                            <field name="venue_id" options="{'no_create': True}"/>
                             <field name="location"/>
                         </group>
                         <group string="Metric Details">
@@ -179,6 +180,7 @@
                             <field name="event_name"/>
                             <field name="competition_name"/>
                             <field name="date" required="1"/>
+                            <field name="venue_id" options="{'no_create': True}"/>
                             <field name="location"/>
                             <field name="competition_level" required="1"/>
                         </group>

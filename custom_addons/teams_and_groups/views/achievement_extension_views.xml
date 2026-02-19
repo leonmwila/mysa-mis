@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sports_achievement_tree_team_scope" model="ir.ui.view">
+        <field name="name">sports.achievement.tree.team.scope</field>
+        <field name="model">sports.achievement</field>
+        <field name="inherit_id" eval="False"/>
+        <field name="arch" type="xml">
+            <list string="Team Achievements" decoration-success="medal_type=='gold'"
+                  decoration-info="medal_type=='silver'" decoration-warning="medal_type=='bronze'"
+                  decoration-muted="verified==False">
+                <field name="date"/>
+                <field name="team_id" string="Team/Group"/>
+                <field name="name"/>
+                <field name="achievement_type"/>
+                <field name="medal_type"/>
+                <field name="position"/>
+                <field name="competition_level"/>
+                <field name="competition_name"/>
+                <field name="points_awarded"/>
+                <field name="verified" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sports_achievement_form_team_scope" model="ir.ui.view">
+        <field name="name">sports.achievement.form.team.scope</field>
+        <field name="model">sports.achievement</field>
+        <field name="inherit_id" ref="sports_tracking.view_sports_achievement_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//field[@name='athlete_id']" position="before">
+                <field name="award_scope" required="1"/>
+            </xpath>
+
+            <xpath expr="//sheet//field[@name='athlete_id']" position="replace">
+                <field name="athlete_id"
+                       options="{'no_create': True}"
+                       invisible="award_scope != 'individual'"
+                       required="award_scope == 'individual'"/>
+            </xpath>
+
+            <xpath expr="//sheet//field[@name='achievement_type']" position="before">
+                <field name="team_id"
+                       options="{'no_create': True}"
+                       invisible="award_scope != 'team'"
+                       required="award_scope == 'team'"/>
+                <field name="source_team_award_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']/button[@name='action_view_athlete_achievements']" position="attributes">
+                <attribute name="invisible">award_scope == 'team'</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -4,5 +4,6 @@ from . import organization
 from . import program
 from . import application
 from . import analytics
+from . import dashboard
 from . import program_integration
-from . import program_integration
+from . import common_association_extension

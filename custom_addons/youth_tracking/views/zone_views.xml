@@ -45,6 +45,17 @@
                     </group>
 
                     <notebook>
+                        <page string="Organizations" name="organizations">
+                            <field name="common_association_ids" context="{'default_is_youth': True}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="entity_kind"/>
+                                    <field name="organization_type"/>
+                                    <field name="status"/>
+                                    <field name="phone"/>
+                                </list>
+                            </field>
+                        </page>
                         <page string="Performance Metrics" name="metrics">
                             <group>
                                 <group string="Youth Metrics">

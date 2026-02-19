@@ -58,7 +58,13 @@ class SportsAssociation(models.Model):
     total_events = fields.Integer(string='Events Organized', compute='_compute_statistics')
     
     # Relationships
-    athlete_ids = fields.One2many('sports.athlete', 'association_id', string='Athletes')
+    athlete_ids = fields.Many2many(
+        'sports.athlete',
+        'sports_association_athlete_rel',
+        'association_id',
+        'athlete_id',
+        string='Athletes'
+    )
     # event_ids = fields.One2many('event.program', 'organizer_association_id', string='Events Organized')  # Commented out for now since event module is separate
     
     # Additional Information
@@ -112,8 +118,8 @@ class SportsAssociation(models.Model):
             'name': f'{self.name} - Athletes',
             'res_model': 'sports.athlete',
             'view_mode': 'kanban,list,form',
-            'domain': [('association_id', '=', self.id)],
-            'context': {'default_association_id': self.id}
+            'domain': [('association_ids', 'in', [self.id])],
+            'context': {'default_association_ids': [(4, self.id)]}
         }
 
     def action_view_active_athletes(self):
@@ -123,8 +129,8 @@ class SportsAssociation(models.Model):
             'name': f'{self.name} - Active Athletes',
             'res_model': 'sports.athlete',
             'view_mode': 'kanban,list,form',
-            'domain': [('association_id', '=', self.id), ('athlete_status', '=', 'active')],
-            'context': {'default_association_id': self.id}
+            'domain': [('association_ids', 'in', [self.id]), ('athlete_status', '=', 'active')],
+            'context': {'default_association_ids': [(4, self.id)]}
         }
 
     def action_view_events(self):
@@ -139,3 +145,4 @@ class SportsAssociation(models.Model):
                 'type': 'info'
             }
         }
+    

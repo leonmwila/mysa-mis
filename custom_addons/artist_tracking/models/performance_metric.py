@@ -202,6 +202,12 @@ class ArtistPerformanceMetric(models.Model):
         if self.artist_id:
             self.art_category = self.artist_id.art_category
 
+    @api.onchange('venue_id')
+    def _onchange_venue_id(self):
+        if self.venue_id:
+            self.venue_name = self.venue_id.name
+            self.venue_address = self.venue_id.address
+
     def action_mark_completed(self):
         """Mark performance as completed"""
         self.write({

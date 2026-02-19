@@ -48,17 +48,16 @@ class ArtistAchievementIntegration(models.Model):
     def _onchange_event_program_id(self):
         """Auto-populate fields when an event/program is selected"""
         if self.event_program_id:
-            # Auto-populate the event/competition name if not already filled
-            if not self.event_competition_name:
-                self.event_competition_name = self.event_program_id.name
-            
-            # Auto-populate location if not already filled
-            if not self.location and self.event_program_id.location:
-                self.location = self.event_program_id.location
+            self.event_competition_name = self.event_program_id.name
+            self.venue_id = self.event_program_id.venue_id
+            self.location = self.event_program_id.location
                 
             # Auto-populate achievement date with event start date if not filled
             if not self.achievement_date and self.event_program_id.start_date:
                 self.achievement_date = self.event_program_id.start_date
+        else:
+            self.event_competition_name = False
+            self.venue_id = False
 
 
 class EventProgramArtistIntegration(models.Model):

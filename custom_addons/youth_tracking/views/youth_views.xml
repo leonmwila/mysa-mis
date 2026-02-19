@@ -31,6 +31,7 @@
                         </group>
                         <group name="location_info" string="Location &amp; Zone">
                             <field name="zone_id" options="{'no_create': False}"/>
+                            <field name="common_association_ids" widget="many2many_tags"/>
                             <field name="address"/>
                         </group>
                     </group>

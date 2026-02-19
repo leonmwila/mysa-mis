@@ -5,3 +5,5 @@ from . import performance_metric
 from . import achievement
 from . import analytics
 from . import achievement_integration
+from . import dashboard
+from . import common_association_extension

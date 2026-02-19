@@ -39,6 +39,9 @@
                         <group name="basic_info" string="Program Information">
                             <field name="program_type" required="1"/>
                             <field name="zone_id" options="{'no_create': False}"/>
+                            <field name="common_organizing_body_id" options="{'no_create': True}"/>
+                            <field name="venue_id" options="{'no_create': True}"/>
+                            <field name="venue"/>
                             <field name="coordinator_id" options="{'no_create': True}"/>
                             <field name="max_participants"/>
                         </group>
@@ -86,6 +89,7 @@
                 <field name="name"/>
                 <field name="program_type"/>
                 <field name="zone_id"/>
+                <field name="venue_id"/>
                 <field name="start_date"/>
                 <field name="end_date"/>
                 <field name="current_participants"/>

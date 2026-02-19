@@ -6,8 +6,20 @@
 
 ## Quick Start
 
-### 1. Start Odoo and PostgreSQL
+### 1. Build and Start Odoo and PostgreSQL
 ```bash
+# Build the custom Odoo image and start services
+docker-compose up -d --build
+```
+
+**Note:** The first time you run this, Docker will build the custom Odoo image which includes your custom addons and dependencies. Subsequent starts will be faster.
+
+### Alternative: Build separately
+```bash
+# Build the image first
+docker-compose build
+
+# Then start services
 docker-compose up -d
 ```
 
@@ -34,7 +46,16 @@ Open your browser: http://localhost:8069
 docker-compose down
 ```
 
-### Restart Odoo (after code changes)
+### Rebuild and Restart Odoo (after code changes)
+```bash
+# Rebuild the image with latest changes
+docker-compose build odoo
+
+# Restart the container
+docker-compose restart odoo
+```
+
+### Restart Odoo (without rebuilding)
 ```bash
 docker-compose restart odoo
 ```
@@ -72,9 +93,12 @@ docker-compose down -v
 ```
 
 ## Folder Structure
-- `custom_addons/` - Your custom Odoo modules (mounted to container)
+- `Dockerfile` - Custom Odoo image definition (includes custom addons and dependencies)
+- `custom_addons/` - Your custom Odoo modules (copied into image)
 - `odoo-docker.conf` - Odoo configuration for Docker
 - `docker-compose.yml` - Docker services configuration
+- `.dockerignore` - Files excluded from Docker build context
+- `requirements.txt` - Python dependencies (installed in image)
 
 ## Troubleshooting
 
@@ -101,3 +125,20 @@ docker ps
 ```bash
 docker-compose exec odoo bash
 ```
+
+### Rebuild image after dependency changes
+If you update `requirements.txt` or modify the Dockerfile:
+```bash
+docker-compose build --no-cache odoo
+docker-compose up -d
+```
+
+## Docker Image Details
+
+The application uses a custom Dockerfile that:
+- Bases on the official `odoo:19.0` image
+- Copies your custom addons into the image
+- Installs Python dependencies from `requirements.txt`
+- Configures proper file permissions
+
+This ensures your customizations are baked into the image for consistent deployments.

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Team Achievement Form View -->
+    <record id="view_sports_team_achievement_form" model="ir.ui.view">
+        <field name="name">sports.team.achievement.form</field>
+        <field name="model">sports.team.achievement</field>
+        <field name="arch" type="xml">
+            <form string="Team Achievement">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="team_id" required="1" options="{'no_create': True}"/>
+                            <field name="event_id" options="{'no_create': True}"/>
+                            <field name="achievement_type" required="1"/>
+                            <field name="medal_type" invisible="achievement_type != 'medal'"/>
+                            <field name="position"/>
+                        </group>
+                        <group>
+                            <field name="date" required="1"/>
+                            <field name="location"/>
+                            <field name="competition_name"/>
+                            <field name="competition_level"/>
+                            <field name="verified"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Achievement description..."/>
+                    </group>
+                    <group string="Member Achievements (Auto-created)" invisible="not member_achievements_created">
+                        <field name="member_achievement_ids" readonly="1" nolabel="1">
+                            <list>
+                                <field name="athlete_id"/>
+                                <field name="achievement_type"/>
+                                <field name="medal_type"/>
+                                <field name="date"/>
+                                <field name="competition_level"/>
+                            </list>
+                        </field>
+                    </group>
+                    <group invisible="not verified">
+                        <field name="verified_by" readonly="1"/>
+                        <field name="verified_date" readonly="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Team Achievement List View -->
+    <record id="view_sports_team_achievement_tree" model="ir.ui.view">
+        <field name="name">sports.team.achievement.list</field>
+        <field name="model">sports.team.achievement</field>
+        <field name="arch" type="xml">
+            <list string="Team Achievements">
+                <field name="name"/>
+                <field name="team_id"/>
+                <field name="achievement_type"/>
+                <field name="medal_type"/>
+                <field name="position"/>
+                <field name="date"/>
+                <field name="competition_level"/>
+                <field name="verified" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Team Achievement Action -->
+    <record id="action_sports_team_achievement" model="ir.actions.act_window">
+        <field name="name">Team Achievements</field>
+        <field name="res_model">sports.team.achievement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
+

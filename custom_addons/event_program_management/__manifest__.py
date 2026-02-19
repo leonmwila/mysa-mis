@@ -8,7 +8,7 @@
     'website': 'mays.gov.zm',
     'licence': 'AGPL-3',
     'demo':[],
-        'depends': ['base', 'sports_tracking'],
+        'depends': ['base', 'sports_tracking', 'venues_management'],
     'data': [
         'security/ir.model.access.csv',
         'views/event_program_views.xml',

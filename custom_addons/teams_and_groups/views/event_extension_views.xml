@@ -1,0 +1,23 @@
+<odoo>
+    <record id="event_program_form_view_inherit_teams_groups" model="ir.ui.view">
+        <field name="name">event.program.form.inherit.teams.groups</field>
+        <field name="model">event.program</field>
+        <field name="inherit_id" ref="event_program_management.view_event_program_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="👥 Teams and Groups" name="teams_groups">
+                    <p class="text-muted">Select teams and groups to participate in this event/program. Their members will automatically appear in the Athlete Participants tab.</p>
+                    <group>
+                        <group string="Sports Teams">
+                            <field name="team_participants_ids" nolabel="1"/>
+                        </group>
+                        <group string="Artist Bands/Groups">
+                            <field name="band_participants_ids" nolabel="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

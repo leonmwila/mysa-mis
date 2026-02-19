@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Dashboard Form View -->
+    <record id="view_artist_dashboard_form" model="ir.ui.view">
+        <field name="name">artist.dashboard.form</field>
+        <field name="model">artist.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Artist Analytics Dashboard">
+                <header>
+                    <button string="Refresh Dashboard" name="action_open_dashboard" type="object" class="btn-primary"/>
+                    <button string="View Artists" name="action_view_artists" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Artist Analytics Dashboard</h1>
+                        <p>Comprehensive artist performance and participation analytics</p>
+                    </div>
+                    
+                    <group string="Filter Parameters">
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    
+                    <!-- Overview KPI Cards -->
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="total_artists" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Total Artists</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="active_artists" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Active Artists</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-danger">
+                                <div class="card-body text-center">
+                                    <h2 class="text-danger">
+                                        <field name="inactive_artists" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Inactive Artists</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-body text-center">
+                                    <h2 class="text-info">
+                                        <field name="new_artists_this_month" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">New This Month</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Metrics Cards -->
+                    <separator string="Performance Metrics" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">🎭 Total Performances</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="total_performances" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0">📅 This Month</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="performances_this_month" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">🔜 Upcoming</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-info">
+                                        <field name="upcoming_performances" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0">⭐ Avg Rating</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-warning">
+                                        <field name="avg_performance_rating" widget="float" digits="[16,1]"/>%
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Achievement Cards -->
+                    <separator string="Achievement Metrics" class="mt16"/>
+                    <div class="row mt16">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0">🏆 Total Achievements</h6>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h2 class="text-success">
+                                            <field name="total_achievements" widget="integer"/>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-warning">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h6 class="mb-0">🌍 International</h6>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h2 class="text-warning">
+                                            <field name="international_achievements" widget="integer"/>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0">🇿🇲 National</h6>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h2 class="text-info">
+                                            <field name="national_achievements" widget="integer"/>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h6 class="mb-0">🎖️ Awards Won</h6>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h2 class="text-danger">
+                                            <field name="awards_won" widget="integer"/>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <!-- Association & Zone Stats -->
+                    <separator string="Association &amp; Zone Statistics" class="mt16"/>
+                    <div class="row mt16">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb16">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">👥 Associations &amp; Zones</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row text-center">
+                                            <div class="col-6">
+                                                <h3 class="text-primary"><field name="total_associations"/></h3>
+                                                <p>Total Associations</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <h3 class="text-info"><field name="total_zones"/></h3>
+                                                <p>Total Zones</p>
+                                            </div>
+                                        </div>
+                                        <div class="row text-center mt-3">
+                                            <div class="col-6">
+                                                <h3 class="text-success"><field name="artists_with_association"/></h3>
+                                                <p>With Association</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <h3 class="text-warning"><field name="avg_artists_per_zone" widget="float" digits="[16,1]"/></h3>
+                                                <p>Avg per Zone</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb16">
+                                <div class="card border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">⭐ Top Performers</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <div class="o_form_label text-muted">Top Performing Artist</div>
+                                            <h5><field name="top_artist_name"/> (<field name="top_artist_performances"/> performances)</h5>
+                                        </div>
+                                        <div>
+                                            <div class="o_form_label text-muted">Most Awarded Artist</div>
+                                            <h5><field name="most_awarded_artist"/> (<field name="most_awarded_count"/> achievements)</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <!-- Art Category Distribution -->
+                    <separator string="Art Category Distribution" class="mt16"/>
+                    <div class="row mt16">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-primary">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-primary"><field name="dance_artists_count"/></h3>
+                                        <p>💃 Dance</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-success">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-success"><field name="music_artists_count"/></h3>
+                                        <p>🎵 Music</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-info">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-info"><field name="visual_arts_count"/></h3>
+                                        <p>🎨 Visual Arts</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-warning">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-warning"><field name="theater_artists_count"/></h3>
+                                        <p>🎭 Theater</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-danger">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-danger"><field name="film_artists_count"/></h3>
+                                        <p>🎬 Film</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-secondary">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-secondary"><field name="literature_artists_count"/></h3>
+                                        <p>📚 Literature</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-dark">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-dark"><field name="digital_arts_count"/></h3>
+                                        <p>💻 Digital Arts</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                                <div class="card border-muted">
+                                    <div class="card-body text-center">
+                                        <h3 class="text-muted"><field name="other_arts_count"/></h3>
+                                        <p>🎪 Other</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <!-- Gender Distribution -->
+                    <separator string="Demographics" class="mt16"/>
+                    <div class="row mt16">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb16">
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">👨 Male Artists</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h1 class="text-primary"><field name="male_artists"/></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-12 mb16">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0">👩 Female Artists</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h1 class="text-danger"><field name="female_artists"/></h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Dashboard Kanban View (Dashboard Style) -->
+    <record id="view_artist_dashboard_kanban" model="ir.ui.view">
+        <field name="name">artist.dashboard.kanban</field>
+        <field name="model">artist.dashboard</field>
+        <field name="arch" type="xml">
+            <kanban create="false" edit="false" delete="false" class="o_kanban_dashboard">
+                <field name="name"/>
+                <field name="total_artists"/>
+                <field name="active_artists"/>
+                <field name="total_performances"/>
+                <field name="total_achievements"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click o_kanban_dashboard">
+                            <div class="o_kanban_card_header">
+                                <div class="o_kanban_card_header_title">
+                                    <div class="o_primary">
+                                        <a type="open" class="fw-bold">
+                                            <field name="name"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container o_kanban_card_content">
+                                <div class="row">
+                                    <div class="col-6 o_kanban_primary_left">
+                                        <button class="btn btn-primary" name="action_view_artists" type="object">
+                                            <span><field name="total_artists"/> Artists</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-6 o_kanban_primary_right">
+                                        <div class="mb4">
+                                            <span class="o_value"><field name="active_artists"/></span>
+                                            <span class="o_label"> Active</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a name="action_view_performances" type="object">
+                                            <span class="o_value"><field name="total_performances"/></span>
+                                            <span class="o_label"> Performances</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a name="action_view_achievements" type="object">
+                                            <span class="o_value"><field name="total_achievements"/></span>
+                                            <span class="o_label"> Achievements</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
+    <!-- Graph View - Art Categories -->
+    <record id="view_artist_dashboard_graph_categories" model="ir.ui.view">
+        <field name="name">artist.dashboard.graph.categories</field>
+        <field name="model">artist.dashboard</field>
+        <field name="arch" type="xml">
+            <graph string="Art Category Distribution" type="pie">
+                <field name="dance_artists_count" type="measure"/>
+                <field name="music_artists_count" type="measure"/>
+                <field name="visual_arts_count" type="measure"/>
+                <field name="theater_artists_count" type="measure"/>
+                <field name="film_artists_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    
+    <!-- Pivot View -->
+    <record id="view_artist_dashboard_pivot" model="ir.ui.view">
+        <field name="name">artist.dashboard.pivot</field>
+        <field name="model">artist.dashboard</field>
+        <field name="arch" type="xml">
+            <pivot string="Artist Analytics">
+                <field name="total_artists" type="measure"/>
+                <field name="active_artists" type="measure"/>
+                <field name="total_performances" type="measure"/>
+                <field name="total_achievements" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    
+    <!-- Dashboard Action -->
+    <record id="action_artist_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">artist.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'form_view_initial_mode': 'readonly'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Artist Tracking Dashboard
+            </p>
+            <p>
+                View comprehensive analytics and insights about artists, performances, and achievements.
+            </p>
+        </field>
+    </record>
+    
+</odoo>

@@ -1,5 +1,10 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
 # Python
-__pycache__/
+__pycache__
 *.py[cod]
 *$py.class
 *.so
@@ -7,18 +12,50 @@ __pycache__/
 venv/
 env/
 ENV/
+*.egg-info/
+dist/
+build/
 
-# Odoo
-*.log
-filestore/
-sessions/
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# Git
-.git/
-.gitignore
+# Logs
+*.log
+odoo.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Documentation
+*.md
+!README-DOCKER.md
+
+# Debian packaging
+debian/
+
+# Filestore (will be in volume)
+filestore/
+
+# Test files
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp

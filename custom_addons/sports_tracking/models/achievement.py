@@ -38,6 +38,7 @@ class SportsAchievement(models.Model):
     
     # Event Information
     date = fields.Date(string='Achievement Date', required=True)
+    venue_id = fields.Many2one('artist.venue', string='Venue')
     location = fields.Char(string='Location')
     competition_name = fields.Char(string='Competition Name')
     
@@ -94,13 +95,12 @@ class SportsAchievement(models.Model):
         if self.achievement_type != 'record':
             self.record_type = False
 
+    @api.onchange('venue_id')
+    def _onchange_venue_id(self):
+        if self.venue_id:
+            self.location = self.venue_id.name
 
 
-    def action_verify(self):
-        """Verify the achievement"""
-        self.verified = True
-        self.verified_by_id = self.env.user.id
-        self.verification_date = fields.Datetime.now()
 
     def get_achievement_display_name(self):
         """Get a formatted display name for the achievement"""
@@ -177,7 +177,7 @@ class SportsAchievement(models.Model):
     def action_verify(self):
         """Verify the achievement"""
         self.verified = True
-        self.verified_by = self.env.user.id
+        self.verified_by_id = self.env.user.id
         self.verification_date = fields.Datetime.now()
 
     def action_view_athlete_achievements(self):

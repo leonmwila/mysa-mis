@@ -71,6 +71,14 @@ class YouthZone(models.Model):
         string='Youth Organizations',
         compute='_compute_organization_stats'
     )
+    common_association_ids = fields.Many2many(
+        'common.association',
+        'youth_zone_common_association_rel',
+        'zone_id',
+        'association_id',
+        string='Organizations/Associations',
+        domain=[('is_youth', '=', True)]
+    )
     
     # Performance Metrics
     total_applications = fields.Integer(
@@ -133,10 +141,8 @@ class YouthZone(models.Model):
 
     def _compute_organization_stats(self):
         """Compute organization statistics for the zone"""
-        Organization = self.env['youth.organization']
         for record in self:
-            organizations = Organization.search([('zone_id', '=', record.id), ('active', '=', True)])
-            record.organization_count = len(organizations)
+            record.organization_count = len(record.common_association_ids)
 
     def _compute_application_stats(self):
         """Compute application statistics for the zone"""
@@ -200,10 +206,10 @@ class YouthZone(models.Model):
         return {
             'name': f'Organizations in {self.name}',
             'type': 'ir.actions.act_window',
-            'res_model': 'youth.organization',
+            'res_model': 'common.association',
             'view_mode': 'kanban,list,form',
-            'domain': [('zone_id', '=', self.id)],
-            'context': {'default_zone_id': self.id},
+            'domain': [('id', 'in', self.common_association_ids.ids)],
+            'context': {'default_is_youth': True},
             'target': 'current',
         }
 

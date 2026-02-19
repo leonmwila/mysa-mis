@@ -24,6 +24,8 @@
         'base',
         'mail',
         'calendar',
+            'venues_management',
+        'associations_organizations',
         'event_program_management',  # For event integration
     ],
     'data': [
@@ -35,10 +37,13 @@
         
         # Views
         'views/actions.xml',
+        'views/dashboard_views.xml',
         'views/artist_views.xml',
+        'views/zone_views.xml',
         'views/association_views.xml',
         'views/performance_views.xml',
         'views/achievement_views.xml',
+        'views/common_association_extension_views.xml',
         'views/menu.xml',
     ],
     'installable': True,

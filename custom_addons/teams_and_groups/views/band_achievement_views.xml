@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Band Achievement Form View -->
+    <record id="view_artist_band_achievement_form" model="ir.ui.view">
+        <field name="name">artist.band.achievement.form</field>
+        <field name="model">artist.band.achievement</field>
+        <field name="arch" type="xml">
+            <form string="Band Achievement">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="band_id" required="1" options="{'no_create': True}"/>
+                            <field name="event_id" options="{'no_create': True}"/>
+                            <field name="achievement_type" required="1"/>
+                            <field name="achievement_category"/>
+                            <field name="award_type"/>
+                            <field name="position"/>
+                        </group>
+                        <group>
+                            <field name="achievement_date" required="1"/>
+                            <field name="location"/>
+                            <field name="event_competition_name"/>
+                            <field name="achievement_level"/>
+                            <field name="issuing_organization"/>
+                            <field name="verified"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Achievement description..."/>
+                    </group>
+                    <group string="Member Achievements (Auto-created)" invisible="not member_achievements_created">
+                        <field name="member_achievement_ids" readonly="1" nolabel="1">
+                            <list>
+                                <field name="artist_id"/>
+                                <field name="achievement_type"/>
+                                <field name="achievement_date"/>
+                                <field name="achievement_level"/>
+                            </list>
+                        </field>
+                    </group>
+                    <group invisible="not verified">
+                        <field name="verified_by" readonly="1"/>
+                        <field name="verified_date" readonly="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Band Achievement List View -->
+    <record id="view_artist_band_achievement_tree" model="ir.ui.view">
+        <field name="name">artist.band.achievement.list</field>
+        <field name="model">artist.band.achievement</field>
+        <field name="arch" type="xml">
+            <list string="Band Achievements">
+                <field name="name"/>
+                <field name="band_id"/>
+                <field name="achievement_type"/>
+                <field name="award_type"/>
+                <field name="position"/>
+                <field name="achievement_date"/>
+                <field name="achievement_level"/>
+                <field name="verified" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Band Achievement Action -->
+    <record id="action_artist_band_achievement" model="ir.actions.act_window">
+        <field name="name">Band Achievements</field>
+        <field name="res_model">artist.band.achievement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
+

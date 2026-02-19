@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sports Team Form View -->
+    <record id="view_sports_team_form" model="ir.ui.view">
+        <field name="name">sports.team.form</field>
+        <field name="model">sports.team</field>
+        <field name="arch" type="xml">
+            <form string="Sports Team">
+                <header>
+                    <button name="action_view_members" type="object" string="View Members" 
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,inactive,disbanded"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_achievements" type="object" class="oe_stat_button" icon="fa-trophy">
+                            <field name="achievement_count" widget="statinfo" string="Achievements"/>
+                        </button>
+                        <button name="action_view_members" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="member_count" widget="statinfo" string="Members"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="team_id" readonly="1"/>
+                            <field name="sport" required="1"/>
+                            <field name="formation_date"/>
+                            <field name="zone_id"/>
+                            <field name="location"/>
+                        </group>
+                        <group>
+                            <field name="common_association_id"/>
+                            <field name="coach_name"/>
+                            <field name="coach_contact"/>
+                            <field name="manager_name"/>
+                            <field name="manager_contact"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" placeholder="Team description..."/>
+                        </page>
+                        <page string="Team Members" name="members">
+                            <field name="member_ids" nolabel="1" context="{'default_team_ids': [(4, id)]}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="email"/>
+                                    <field name="phone"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Events" name="events">
+                            <field name="event_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="location"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Achievements" name="achievements">
+                            <field name="achievement_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="achievement_type"/>
+                                    <field name="medal_type"/>
+                                    <field name="position"/>
+                                    <field name="date"/>
+                                    <field name="competition_level"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="name"/>
+                                                <field name="achievement_type"/>
+                                                <field name="medal_type"/>
+                                                <field name="position"/>
+                                                <field name="date"/>
+                                            </group>
+                                            <group>
+                                                <field name="competition_level"/>
+                                                <field name="location"/>
+                                                <field name="competition_name"/>
+                                                <field name="verified"/>
+                                            </group>
+                                        </group>
+                                        <group>
+                                            <field name="description"/>
+                                        </group>
+                                        <group>
+                                            <field name="member_achievement_ids" readonly="1">
+                                                <list>
+                                                    <field name="athlete_id"/>
+                                                    <field name="achievement_type"/>
+                                                    <field name="medal_type"/>
+                                                    <field name="date"/>
+                                                </list>
+                                            </field>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Sports Team List View -->
+    <record id="view_sports_team_tree" model="ir.ui.view">
+        <field name="name">sports.team.list</field>
+        <field name="model">sports.team</field>
+        <field name="arch" type="xml">
+            <list string="Sports Teams">
+                <field name="name"/>
+                <field name="team_id"/>
+                <field name="sport"/>
+                <field name="member_count"/>
+                <field name="achievement_count"/>
+                <field name="zone_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'active'" 
+                       decoration-muted="state == 'inactive'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Sports Team Search View -->
+    <record id="view_sports_team_search" model="ir.ui.view">
+        <field name="name">sports.team.search</field>
+        <field name="model">sports.team</field>
+        <field name="arch" type="xml">
+            <search string="Search Sports Teams">
+                <field name="name" string="Team Name"/>
+                <field name="team_id" string="Team ID"/>
+                <field name="sport"/>
+                <field name="zone_id"/>
+                <field name="common_association_id"/>
+                <field name="coach_name"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Active Teams" name="state_active" domain="[('state', '=', 'active')]"/>
+                <filter string="Inactive Teams" name="state_inactive" domain="[('state', '=', 'inactive')]"/>
+                <group>
+                    <filter string="Sport" name="group_sport" context="{'group_by': 'sport'}"/>
+                    <filter string="Zone" name="group_zone" context="{'group_by': 'zone_id'}"/>
+                    <filter string="Association" name="group_association" context="{'group_by': 'common_association_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Sports Team Kanban View -->
+    <record id="view_sports_team_kanban" model="ir.ui.view">
+        <field name="name">sports.team.kanban</field>
+        <field name="model">sports.team</field>
+        <field name="arch" type="xml">
+            <kanban default_order="name" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="sport"/>
+                <field name="member_count"/>
+                <field name="achievement_count"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div>
+                                        <i class="fa fa-futbol-o"/> <field name="sport"/>
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-users"/> <field name="member_count"/> Members
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-trophy"/> <field name="achievement_count"/> Achievements
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Sports Team Action -->
+    <record id="action_sports_team" model="ir.actions.act_window">
+        <field name="name">Sports Teams</field>
+        <field name="res_model">sports.team</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Sports Team!
+            </p>
+            <p>
+                Track sports teams, their members, and achievements.
+            </p>
+        </field>
+    </record>
+
+</odoo>
+

@@ -19,15 +19,23 @@ class SportsZone(models.Model):
     
     # Relationships
     association_ids = fields.One2many('sports.association', 'zone_id', string='Associations')
+    common_association_ids = fields.Many2many(
+        'common.association',
+        'sports_zone_common_association_rel',
+        'zone_id',
+        'association_id',
+        string='Associations/Organizations',
+        domain=[('is_sports', '=', True)],
+    )
     athlete_ids = fields.One2many('sports.athlete', 'zone_id', string='Athletes')
     
     description = fields.Text(string='Description')
     active = fields.Boolean(string='Active', default=True)
 
-    @api.depends('association_ids', 'athlete_ids')
+    @api.depends('common_association_ids', 'athlete_ids')
     def _compute_statistics(self):
         for record in self:
-            record.total_associations = len(record.association_ids)
+            record.total_associations = len(record.common_association_ids)
             record.total_athletes = len(record.athlete_ids)
             # Active programs would need event integration
             record.active_programs = 0
@@ -58,10 +66,10 @@ class SportsZone(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': f'{self.name} - Associations',
-            'res_model': 'sports.association',
+            'res_model': 'common.association',
             'view_mode': 'list,form,kanban',
-            'domain': [('zone_id', '=', self.id)],
-            'context': {'default_zone_id': self.id}
+            'domain': [('id', 'in', self.common_association_ids.ids)],
+            'context': {'default_is_sports': True}
         }
 
     def action_view_athletes(self):

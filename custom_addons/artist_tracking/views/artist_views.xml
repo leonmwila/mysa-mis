@@ -105,7 +105,7 @@
                             <group>
                                 <group string="Zone &amp; Associations">
                                     <field name="zone_id"/>
-                                    <field name="association_ids" widget="many2many_tags"/>
+                                    <field name="common_association_ids" widget="many2many_tags"/>
                                 </group>
                                 <group string="Mentorship">
                                     <field name="mentee_ids" widget="many2many_tags"/>
@@ -129,7 +129,7 @@
                                     <field name="name"/>
                                     <field name="performance_type"/>
                                     <field name="performance_date"/>
-                                    <field name="venue_name"/>
+                                    <field name="venue_id"/>
                                     <field name="overall_rating"/>
                                     <field name="status"/>
                                 </list>

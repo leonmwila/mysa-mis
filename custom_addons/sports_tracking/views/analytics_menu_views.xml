@@ -26,7 +26,7 @@
                         <group>
                             <field name="sport_type"/>
                             <field name="zone_id" options="{'no_create': True}"/>
-                            <field name="association_id" options="{'no_create': True}"/>
+                            <field name="common_association_id" options="{'no_create': True}"/>
                         </group>
                     </group>
                     
@@ -165,13 +165,6 @@
               parent="menu_sports_tracking_root"
               action="action_sports_zone"
               sequence="20"/>
-
-    <!-- Sports Associations Menu -->
-    <menuitem id="menu_sports_associations"
-              name="🏆 Sports Associations"
-              parent="menu_sports_tracking_root"
-              action="action_sports_association"
-              sequence="30"/>
 
     <!-- Performance Metrics Menu -->
     <menuitem id="menu_sports_performance"

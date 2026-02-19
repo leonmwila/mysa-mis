@@ -65,6 +65,14 @@ class Artist(models.Model):
     
     registration_date = fields.Date('Registration Date', default=fields.Date.today, tracking=True)
     association_ids = fields.Many2many('artist.association', string='Associations')
+    common_association_ids = fields.Many2many(
+        'common.association',
+        'artist_common_association_rel',
+        'artist_id',
+        'association_id',
+        string='Associations/Organizations',
+        help='Shared associations and organizations from the central registry'
+    )
     zone_id = fields.Many2one('artist.zone', string='Zone', tracking=True)
     
     # Professional Information

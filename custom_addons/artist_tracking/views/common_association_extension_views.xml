@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_common_association_form_artist_extension" model="ir.ui.view">
+        <field name="name">common.association.form.artist.extension</field>
+        <field name="model">common.association</field>
+        <field name="inherit_id" ref="associations_organizations.view_common_association_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='art_focus']" position="after">
+                <field name="artist_zone_id" invisible="not is_arts"/>
+            </xpath>
+
+            <xpath expr="//field[@name='description']/.." position="after">
+                <group string="Artist Members" invisible="not is_arts">
+                    <field name="artist_member_ids" context="{'default_common_association_ids': [(4, id)]}">
+                        <list>
+                            <field name="name"/>
+                            <field name="artist_id"/>
+                            <field name="art_category"/>
+                            <field name="status"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

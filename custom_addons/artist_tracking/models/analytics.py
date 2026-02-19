@@ -11,7 +11,7 @@ class ArtistAnalytics(models.Model):
     name = fields.Char('Analytics Report Name')
     artist_id = fields.Many2one('artist.artist', string='Artist')
     zone_id = fields.Many2one('artist.zone', string='Zone')
-    association_id = fields.Many2one('artist.association', string='Association')
+    association_id = fields.Many2one('common.association', string='Association/Organization', domain=[('is_arts', '=', True)])
     
     # Time Period
     period_start = fields.Date('Period Start')
@@ -79,7 +79,7 @@ class ArtistDashboard(models.TransientModel):
             record.active_artists = self.env['artist.artist'].search_count([('status', '=', 'active')])
             
             # Total associations
-            record.total_associations = self.env['artist.association'].search_count([])
+            record.total_associations = self.env['common.association'].search_count([('is_arts', '=', True)])
             
             # Performances this month
             start_of_month = datetime.now().replace(day=1).date()

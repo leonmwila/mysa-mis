@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Create Default Dashboard Record -->
+        <record id="default_artist_dashboard" model="artist.dashboard">
+            <field name="name">Artist Analytics Dashboard</field>
+        </record>
+        
+    </data>
+</odoo>

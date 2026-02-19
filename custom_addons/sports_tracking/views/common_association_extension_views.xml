@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_common_association_form_sports_extension" model="ir.ui.view">
+        <field name="name">common.association.form.sports.extension</field>
+        <field name="model">common.association</field>
+        <field name="inherit_id" ref="associations_organizations.view_common_association_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sports_type']" position="after">
+                <field name="sports_zone_id" invisible="not is_sports"/>
+            </xpath>
+
+            <xpath expr="//field[@name='description']/.." position="after">
+                <group string="Sports Members" invisible="not is_sports">
+                    <field name="sports_member_ids" context="{'default_common_association_ids': [(4, id)]}">
+                        <list>
+                            <field name="name"/>
+                            <field name="athlete_id"/>
+                            <field name="primary_sport"/>
+                            <field name="athlete_status"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -58,7 +58,7 @@
                             <field name="secondary_sports"/>
                             <field name="position"/>
                             <field name="playing_level"/>
-                            <field name="association_id"/>
+                            <field name="common_association_ids" widget="many2many_tags"/>
                             <field name="zone_id"/>
                             <field name="district"/>
                         </group>
@@ -126,7 +126,7 @@
                 <field name="name"/>
                 <field name="athlete_id"/>
                 <field name="primary_sport"/>
-                <field name="association_id"/>
+                <field name="common_primary_association_id"/>
                 <field name="zone_id"/>
                 <field name="playing_level"/>
                 <field name="age_computed"/>

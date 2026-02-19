@@ -23,6 +23,8 @@
         'base',
         'mail',
         'calendar',
+        'venues_management',
+        'associations_organizations',
         'event_program_management',
     ],
     'data': [
@@ -33,6 +35,8 @@
         'views/zone_views.xml',
         'views/application_views.xml',
         'views/other_views.xml',
+        'views/dashboard_views.xml',
+        'views/common_association_extension_views.xml',
         'views/menu.xml',
     ],
     'assets': {

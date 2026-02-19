@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Restrict Sports Achievements menu to individual athlete awards only -->
+    <record id="sports_tracking.action_sports_achievement" model="ir.actions.act_window">
+        <field name="domain">[('award_scope', '=', 'individual')]</field>
+        <field name="context">{'search_default_verified': 1, 'default_award_scope': 'individual'}</field>
+    </record>
+
+    <!-- Team/Group achievements action from sports.achievement -->
+    <record id="action_sports_team_group_achievement_scope" model="ir.actions.act_window">
+        <field name="name">Team Achievements</field>
+        <field name="res_model">sports.achievement</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="view_id" ref="teams_and_groups.view_sports_achievement_tree_team_scope"/>
+        <field name="domain">[('award_scope', '=', 'team')]</field>
+        <field name="context">{'search_default_verified': 1, 'default_award_scope': 'team'}</field>
+    </record>
+
+    <!-- Teams and Groups Menu -->
+    <menuitem id="menu_teams_groups_root" 
+              name="Teams &amp; Groups" 
+              sequence="50"
+              groups="base.group_user"/>
+
+    <!-- Sports Teams Submenu -->
+    <menuitem id="menu_sports_teams" 
+              name="Sports Teams" 
+              parent="menu_teams_groups_root"
+              action="action_sports_team"
+              sequence="10"/>
+
+    <!-- Artist Bands Submenu -->
+    <menuitem id="menu_artist_bands" 
+              name="Artist Bands/Groups" 
+              parent="menu_teams_groups_root"
+              action="action_artist_band"
+              sequence="20"/>
+
+    <!-- Team Achievements Submenu -->
+    <menuitem id="menu_team_achievements" 
+              name="Team Achievements" 
+              parent="menu_teams_groups_root"
+              action="action_sports_team_achievement"
+              sequence="30"/>
+
+    <!-- Team Achievements in Sports Tracking menu -->
+    <menuitem id="menu_sports_team_achievements"
+              name="Team Achievements"
+              parent="sports_tracking.menu_sports_tracking_root"
+              action="action_sports_team_group_achievement_scope"
+              sequence="55"/>
+
+    <!-- Band Achievements Submenu -->
+    <menuitem id="menu_band_achievements" 
+              name="Band Achievements" 
+              parent="menu_teams_groups_root"
+              action="action_artist_band_achievement"
+              sequence="40"/>
+
+</odoo>
+

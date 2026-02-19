@@ -19,7 +19,7 @@
     'maintainer': 'Smart Zambia Institute',
     'website': 'mays.gov.zm',
     'license': 'AGPL-3',
-    'depends': ['base', 'mail', 'calendar'],
+    'depends': ['base', 'mail', 'calendar', 'venues_management', 'associations_organizations'],
     'data': [
         'security/ir.model.access.csv',
         'security/sports_tracking_security.xml',
@@ -29,6 +29,7 @@
         'views/performance_achievement_views.xml',
         'views/analytics_menu_views.xml',
         'views/analytics_graph_views.xml',
+        'views/common_association_extension_views.xml',
     ],
     'installable': True,
     'application': True,

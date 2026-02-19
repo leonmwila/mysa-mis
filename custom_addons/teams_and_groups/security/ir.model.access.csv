@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sports_team_user,sports.team.user,model_sports_team,base.group_user,1,1,1,1
+access_sports_team_manager,sports.team.manager,model_sports_team,base.group_user,1,1,1,1
+access_artist_band_user,artist.band.user,model_artist_band,base.group_user,1,1,1,1
+access_artist_band_manager,artist.band.manager,model_artist_band,base.group_user,1,1,1,1
+access_sports_team_achievement_user,sports.team.achievement.user,model_sports_team_achievement,base.group_user,1,1,1,1
+access_sports_team_achievement_manager,sports.team.achievement.manager,model_sports_team_achievement,base.group_user,1,1,1,1
+access_artist_band_achievement_user,artist.band.achievement.user,model_artist_band_achievement,base.group_user,1,1,1,1
+access_artist_band_achievement_manager,artist.band.achievement.manager,model_artist_band_achievement,base.group_user,1,1,1,1
+

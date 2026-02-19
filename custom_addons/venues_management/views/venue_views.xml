@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shared_venue_form" model="ir.ui.view">
+        <field name="name">shared.venue.form</field>
+        <field name="model">artist.venue</field>
+        <field name="arch" type="xml">
+            <form string="Venue">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Venue Details">
+                            <field name="venue_type" required="1"/>
+                            <field name="capacity"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Location">
+                            <field name="district"/>
+                            <field name="province"/>
+                            <field name="address"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Management">
+                            <field name="manager_name"/>
+                            <field name="manager_phone"/>
+                            <field name="manager_email"/>
+                        </group>
+                        <group string="Booking">
+                            <field name="booking_required"/>
+                            <field name="booking_contact"/>
+                            <field name="rental_rate"/>
+                        </group>
+                    </group>
+                    <group string="Facilities">
+                        <field name="facilities"/>
+                        <field name="equipment"/>
+                        <field name="accessibility"/>
+                        <field name="parking_available"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shared_venue_tree" model="ir.ui.view">
+        <field name="name">shared.venue.tree</field>
+        <field name="model">artist.venue</field>
+        <field name="arch" type="xml">
+            <list string="Venues">
+                <field name="name"/>
+                <field name="venue_type"/>
+                <field name="district"/>
+                <field name="province"/>
+                <field name="capacity"/>
+                <field name="manager_name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_shared_venue_search" model="ir.ui.view">
+        <field name="name">shared.venue.search</field>
+        <field name="model">artist.venue</field>
+        <field name="arch" type="xml">
+            <search string="Venues">
+                <field name="name"/>
+                <field name="venue_type"/>
+                <field name="district"/>
+                <field name="province"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <group>
+                    <filter string="Venue Type" name="group_type" context="{'group_by': 'venue_type'}"/>
+                    <filter string="District" name="group_district" context="{'group_by': 'district'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_shared_venue" model="ir.actions.act_window">
+        <field name="name">Venues</field>
+        <field name="res_model">artist.venue</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register your first venue!
+            </p>
+            <p>
+                Manage venues used by Artist, Sports, and Youth programs.
+            </p>
+        </field>
+    </record>
+</odoo>

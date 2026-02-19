@@ -85,6 +85,14 @@ class Youth(models.Model):
         string='Youth Organizations',
         help='Youth groups, clubs, or organizations the youth belongs to'
     )
+    common_association_ids = fields.Many2many(
+        'common.association',
+        'youth_common_association_rel',
+        'youth_id',
+        'association_id',
+        string='Organizations/Associations',
+        help='Shared organizations and associations from the central registry'
+    )
     
     # Program Participation
     program_ids = fields.Many2many(

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for Team and Band IDs -->
+        <record id="seq_sports_team" model="ir.sequence">
+            <field name="name">Sports Team ID</field>
+            <field name="code">sports.team</field>
+            <field name="prefix">TEAM</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <record id="seq_artist_band" model="ir.sequence">
+            <field name="name">Artist Band ID</field>
+            <field name="code">artist.band</field>
+            <field name="prefix">BAND</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+        </record>
+    </data>
+</odoo>
+

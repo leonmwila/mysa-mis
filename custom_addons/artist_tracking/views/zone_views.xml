@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_artist_zone_form" model="ir.ui.view">
+        <field name="name">artist.zone.form</field>
+        <field name="model">artist.zone</field>
+        <field name="arch" type="xml">
+            <form string="Artist Zone">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_artists" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="artist_count" widget="statinfo" string="Artists"/>
+                        </button>
+                        <button name="action_view_associations" type="object" class="oe_stat_button" icon="fa-sitemap">
+                            <field name="association_count" widget="statinfo" string="Associations"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Zone Details">
+                            <field name="code" required="1"/>
+                            <field name="region"/>
+                            <field name="parent_zone_id"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Contact Information">
+                            <field name="zone_coordinator"/>
+                            <field name="coordinator_phone"/>
+                            <field name="coordinator_email"/>
+                        </group>
+                    </group>
+
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+
+                    <group string="Office Address">
+                        <field name="office_address" nolabel="1"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Artists">
+                            <field name="artist_selection_ids" context="{'default_zone_id': id}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="stage_name"/>
+                                    <field name="art_category"/>
+                                    <field name="phone"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Associations">
+                            <field name="common_association_ids" context="{'default_is_arts': True}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="entity_kind"/>
+                                    <field name="art_focus"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Cultural Venues">
+                            <field name="venue_selection_ids" context="{'default_zone_id': id}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="venue_type"/>
+                                    <field name="district"/>
+                                    <field name="province"/>
+                                    <field name="capacity"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_artist_zone_tree" model="ir.ui.view">
+        <field name="name">artist.zone.tree</field>
+        <field name="model">artist.zone</field>
+        <field name="arch" type="xml">
+            <list string="Artist Zones">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="region"/>
+                <field name="artist_count"/>
+                <field name="association_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+</odoo>

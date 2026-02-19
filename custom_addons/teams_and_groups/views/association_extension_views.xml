@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend Sports Association Form View to add Teams/Groups tab -->
+    <record id="view_sports_association_form_teams_groups" model="ir.ui.view">
+        <field name="name">sports.association.form.teams.groups</field>
+        <field name="model">sports.association</field>
+        <field name="inherit_id" ref="sports_tracking.view_sports_association_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Teams and Bands stat buttons -->
+            <xpath expr="//div[@name='button_box']/button[@name='action_view_active_athletes']" position="after">
+                <button class="oe_stat_button" type="object" name="action_view_teams" icon="fa-users">
+                    <field string="Teams" name="total_teams" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="action_view_bands" icon="fa-music">
+                    <field string="Bands" name="total_bands" widget="statinfo"/>
+                </button>
+            </xpath>
+            
+            <!-- Add Teams/Groups tab -->
+            <xpath expr="//notebook/page[@name='athletes']" position="after">
+                <page string="Teams/Groups" name="teams_groups">
+                    <group>
+                        <group string="Sports Teams">
+                            <field name="team_ids" nolabel="1"/>
+                        </group>
+                        <group string="Artist Bands/Groups">
+                            <field name="band_ids" nolabel="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

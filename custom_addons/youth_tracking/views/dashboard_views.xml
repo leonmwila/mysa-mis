@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Dashboard Form View -->
+    <record id="view_youth_dashboard_form" model="ir.ui.view">
+        <field name="name">youth.dashboard.form</field>
+        <field name="model">youth.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Youth Analytics Dashboard">
+                <header>
+                    <button string="Refresh Dashboard" name="action_open_dashboard" type="object" class="btn-primary"/>
+                    <button string="View Youth" name="action_view_youth" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>Youth Analytics Dashboard</h1>
+                        <p>Comprehensive youth program and participation analytics</p>
+                    </div>
+                    
+                    <group string="Filter Parameters">
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    
+                    <!-- Overview KPI Cards -->
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="total_youth" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Total Youth</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="active_youth" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Active Youth</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-danger">
+                                <div class="card-body text-center">
+                                    <h2 class="text-danger">
+                                        <field name="inactive_youth" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">Inactive Youth</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-body text-center">
+                                    <h2 class="text-info">
+                                        <field name="new_youth_this_month" widget="integer"/>
+                                    </h2>
+                                    <p class="card-text">New This Month</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Age Demographics -->
+                    <separator string="Age Demographics" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">👦 Youth 18-25</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="youth_18_25" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0">👨 Youth 26-30</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="youth_26_30" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">👴 Youth 31-35</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-info">
+                                        <field name="youth_31_35" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Program Statistics -->
+                    <separator string="Program Statistics" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">📚 Total Programs</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="total_programs" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0">✅ Active Programs</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="active_programs" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">🏁 Completed</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-info">
+                                        <field name="completed_programs" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0">👥 Participants</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-warning">
+                                        <field name="total_participants" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Application Statistics -->
+                    <separator string="Application Statistics" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">📝 Total Applications</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="total_applications" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0">⏳ Pending</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-warning">
+                                        <field name="pending_applications" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0">✅ Approved</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="approved_applications" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-danger">
+                                <div class="card-header bg-danger text-white">
+                                    <h6 class="mb-0">❌ Rejected</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-danger">
+                                        <field name="rejected_applications" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CDF Statistics -->
+                    <separator string="CDF (Constituency Development Fund) Statistics" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h6 class="mb-0">💰 CDF Applications</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-success">
+                                        <field name="cdf_applications" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h6 class="mb-0">✅ CDF Approved</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">
+                                        <field name="cdf_approved" widget="integer"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h6 class="mb-0">💵 Total Amount</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-warning">
+                                        <field name="cdf_total_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">📊 Avg Amount</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-info">
+                                        <field name="cdf_average_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Education Levels -->
+                    <separator string="Education Level Distribution" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <h3 class="text-primary"><field name="primary_education"/></h3>
+                                    <p>📖 Primary</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h3 class="text-success"><field name="secondary_education"/></h3>
+                                    <p>📚 Secondary</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-info">
+                                <div class="card-body text-center">
+                                    <h3 class="text-info"><field name="tertiary_education"/></h3>
+                                    <p>🎓 Tertiary</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-body text-center">
+                                    <h3 class="text-warning"><field name="university_education"/></h3>
+                                    <p>🏛️ University</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Employment Status -->
+                    <separator string="Employment Status Distribution" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-body text-center">
+                                    <h3 class="text-success"><field name="employed_youth"/></h3>
+                                    <p>💼 Employed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-danger">
+                                <div class="card-body text-center">
+                                    <h3 class="text-danger"><field name="unemployed_youth"/></h3>
+                                    <p>❌ Unemployed</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-body text-center">
+                                    <h3 class="text-primary"><field name="student_youth"/></h3>
+                                    <p>📚 Students</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12 mb16">
+                            <div class="card border-warning">
+                                <div class="card-body text-center">
+                                    <h3 class="text-warning"><field name="self_employed_youth"/></h3>
+                                    <p>👨‍💼 Self-Employed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Demographics & Organizations -->
+                    <separator string="Demographics &amp; Organizations" class="mt16"/>
+                    <div class="row mt16">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb16">
+                            <div class="card border-primary">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">👨 Male Youth</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="text-primary"><field name="male_youth"/></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb16">
+                            <div class="card border-danger">
+                                <div class="card-header bg-danger text-white">
+                                    <h5 class="mb-0">👩 Female Youth</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="text-danger"><field name="female_youth"/></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 mb16">
+                            <div class="card border-success">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">🏢 Organizations</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h1 class="text-success"><field name="total_organizations"/></h1>
+                                    <p class="text-muted mb-0"><field name="active_organizations"/> Active</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+</odoo>
