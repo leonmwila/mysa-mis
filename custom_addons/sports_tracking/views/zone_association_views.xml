@@ -66,7 +66,7 @@
                             </field>
                         </page>
                         <page string="Athletes" name="athletes">
-                            <field name="athlete_ids">
+                            <field name="athlete_ids" context="{'form_view_ref': 'sports_tracking.view_sports_athlete_quick_form', 'default_zone_id': id}">
                                 <list decoration-success="athlete_status=='active'" decoration-muted="athlete_status=='retired'">
                                     <field name="name"/>
                                     <field name="athlete_id"/>
@@ -213,7 +213,7 @@
                     
                     <notebook>
                         <page string="Athletes" name="athletes">
-                            <field name="athlete_ids"/>
+                            <field name="athlete_ids" context="{'form_view_ref': 'sports_tracking.view_sports_athlete_quick_form', 'default_association_ids': [(4, id)]}"/>
                         </page>
                     </notebook>
                 </sheet>

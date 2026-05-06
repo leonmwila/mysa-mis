@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- ========== ATHLETE VIEWS ========== -->
+
+    <!-- Compact Athlete Form For Modal/Create Flows -->
+    <record id="view_sports_athlete_quick_form" model="ir.ui.view">
+        <field name="name">sports.athlete.quick.form</field>
+        <field name="model">sports.athlete</field>
+        <field name="arch" type="xml">
+            <form string="Add Athlete">
+                <sheet>
+                    <group>
+                        <group string="Personal Information">
+                            <field name="name" required="1"/>
+                            <field name="gender"/>
+                            <field name="date_of_birth"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                        </group>
+                        <group string="Sports Information">
+                            <field name="primary_sport" required="1"/>
+                            <field name="playing_level"/>
+                            <field name="common_association_ids" widget="many2many_tags"/>
+                            <field name="zone_id" readonly="1" force_save="1"/>
+                            <field name="available_for_events"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
     
     <!-- Athlete Form View -->
     <record id="view_sports_athlete_form" model="ir.ui.view">
@@ -105,12 +136,13 @@
                             <field name="performance_metric_ids"/>
                         </page>
                     </notebook>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div>
             </form>
         </field>
     </record>

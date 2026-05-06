@@ -81,3 +81,19 @@
 .achievement_card {
     border-left: 4px solid #FF9800;
 }
+
+/*
+ * Fix: the chatter aside panel has flex-grow: 1 which causes it to consume
+ * all remaining horizontal space, squeezing the form to the left.
+ * Override flex-grow to 0 so chatter stays at its natural width (~530px),
+ * and let the form sheet expand to fill the remaining space.
+ */
+.o-mail-Form-chatter.o-aside,
+.o-mail-ChatterContainer.o-aside {
+    flex-grow: 0 !important;
+}
+
+.o_form_sheet_bg {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}

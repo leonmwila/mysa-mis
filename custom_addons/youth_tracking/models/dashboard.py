@@ -159,9 +159,9 @@ class YouthDashboard(models.TransientModel):
             
             cdf_apps = Application.search([('application_type', '=', 'cdf')])
             record.cdf_applications = len(cdf_apps)
-            record.cdf_approved = len(cdf_apps.filtered(lambda a: a.state == 'approved'))
+            record.cdf_approved = len(cdf_apps.filtered(lambda a: a.status == 'approved'))
             
-            approved_cdf = cdf_apps.filtered(lambda a: a.state == 'approved')
+            approved_cdf = cdf_apps.filtered(lambda a: a.status == 'approved')
             record.cdf_total_amount = sum(app.amount_requested for app in approved_cdf)
             
             if record.cdf_approved > 0:

@@ -9,8 +9,6 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
-    ports:
-      - "5432:5432"
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U odoo"]
@@ -27,7 +25,7 @@ services:
       db:
         condition: service_healthy
     ports:
-      - "8069:8069"
+      - "8071:8069"
     environment:
       - HOST=db
       - USER=odoo

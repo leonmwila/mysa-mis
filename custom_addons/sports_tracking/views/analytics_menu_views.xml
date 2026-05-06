@@ -187,11 +187,12 @@
               sequence="60"/>
 
     <!-- Quick Add Actions -->
-    <record id="action_quick_add_athlete" model="ir.actions.act_window">
+        <record id="action_quick_add_athlete" model="ir.actions.act_window">
         <field name="name">Quick Add Athlete</field>
         <field name="res_model">sports.athlete</field>
         <field name="view_mode">form</field>
-        <field name="target">new</field>
+            <field name="view_id" ref="sports_tracking.view_sports_athlete_quick_form"/>
+        <field name="target">current</field>
         <field name="context">{'form_view_initial_mode': 'edit'}</field>
     </record>
 
@@ -199,7 +200,7 @@
         <field name="name">Quick Add Achievement</field>
         <field name="res_model">sports.achievement</field>
         <field name="view_mode">form</field>
-        <field name="target">new</field>
+        <field name="target">current</field>
         <field name="context">{'form_view_initial_mode': 'edit'}</field>
     </record>
 
@@ -207,7 +208,7 @@
         <field name="name">Quick Add Performance Metric</field>
         <field name="res_model">sports.performance.metric</field>
         <field name="view_mode">form</field>
-        <field name="target">new</field>
+        <field name="target">current</field>
         <field name="context">{'form_view_initial_mode': 'edit'}</field>
     </record>
 

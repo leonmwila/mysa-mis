@@ -11,7 +11,7 @@
 
             <xpath expr="//field[@name='description']/.." position="after">
                 <group string="Sports Members" invisible="not is_sports">
-                    <field name="sports_member_ids" context="{'default_common_association_ids': [(4, id)]}">
+                    <field name="sports_member_ids" context="{'default_common_association_ids': [(4, id)], 'form_view_ref': 'sports_tracking.view_sports_athlete_quick_form'}">
                         <list>
                             <field name="name"/>
                             <field name="athlete_id"/>

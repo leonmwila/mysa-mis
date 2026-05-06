@@ -1,0 +1,6 @@
+custom_addons/youth_tracking/views/menu.xml:7:        <field name="res_model">youth.dashboard</field>
+custom_addons/youth_tracking/views/menu.xml:24:        <field name="res_model">youth.youth</field>
+custom_addons/youth_tracking/views/menu.xml:33:        <field name="res_model">event.program</field>
+custom_addons/youth_tracking/views/menu.xml:50:        <field name="res_model">youth.organization</field>
+custom_addons/youth_tracking/views/menu.xml:65:        <field name="res_model">youth.achievement</field>
+custom_addons/youth_tracking/views/menu.xml:80:        <field name="res_model">youth.analytics</field>
