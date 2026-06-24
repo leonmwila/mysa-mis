@@ -1,0 +1,58 @@
+name: Deploy to Kubernetes
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      image_tag:
+        description: Image tag to deploy (for example sha-abc1234)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Set up kustomize
+        uses: imranismail/setup-kustomize@v2
+
+      - name: Write kubeconfig
+        env:
+          ENV_NAME: ${{ inputs.environment }}
+          KUBECONFIG_STAGING: ${{ secrets.KUBECONFIG_STAGING }}
+          KUBECONFIG_PRODUCTION: ${{ secrets.KUBECONFIG_PRODUCTION }}
+        run: |
+          mkdir -p "$HOME/.kube"
+          if [[ "$ENV_NAME" == "staging" ]]; then
+            printf '%s' "$KUBECONFIG_STAGING" > "$HOME/.kube/config"
+          else
+            printf '%s' "$KUBECONFIG_PRODUCTION" > "$HOME/.kube/config"
+          fi
+          chmod 600 "$HOME/.kube/config"
+
+      - name: Deploy with kustomize
+        env:
+          ENV_NAME: ${{ inputs.environment }}
+          IMAGE_TAG: ${{ inputs.image_tag }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          cd "k8s/overlays/$ENV_NAME"
+          kustomize edit set image "ghcr.io/$OWNER/mysa-mis=ghcr.io/$OWNER/mysa-mis:$IMAGE_TAG"
+          kustomize build . | kubectl apply -f -
+          kubectl -n mysa-mis rollout status deployment/odoo --timeout=300s
