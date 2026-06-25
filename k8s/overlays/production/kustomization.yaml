@@ -7,7 +7,7 @@ resources:
 images:
   - name: ghcr.io/leonmwila/mysa-mis
     newName: ghcr.io/leonmwila/mysa-mis
-    newTag: production-latest
+    newTag: sha-c76095a
 
 patches:
   - path: ingress-patch.yaml
