@@ -13,6 +13,7 @@ class CommonAssociation(models.Model):
     entity_kind = fields.Selection([
         ('association', 'Association'),
         ('organization', 'Organization'),
+        ('institution', 'Institution'),
     ], string='Type', required=True, default='association', tracking=True)
 
     is_sports = fields.Boolean(string='Used in Sports', default=False, tracking=True)

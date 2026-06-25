@@ -8,6 +8,7 @@
                     <group>
                         <field name="name"/>
                         <field name="category"/>
+                        <field name="company_id"/>
                         <field name="venue_id" options="{'no_create': True}"/>
                         <field name="location"/>
                         <field name="gender"/>
@@ -62,6 +63,7 @@
             <list>
                 <field name="name"/>
                 <field name="category"/>
+                <field name="company_id"/>
                 <field name="venue_id"/>
                 <field name="location"/>
                 <field name="start_date"/>

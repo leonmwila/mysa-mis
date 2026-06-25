@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List view: Companies that are typed as Association / Organization / Institution -->
+    <record id="view_company_association_list" model="ir.ui.view">
+        <field name="name">res.company.association.list</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <list string="Companies (Associations &amp; Organizations)">
+                <field name="name"/>
+                <field name="org_status" string="Organization Status" widget="badge"/>
+                <field name="entity_kind" string="Type"/>
+                <field name="is_sports" string="Sports"/>
+                <field name="is_arts" string="Arts"/>
+                <field name="is_youth" string="Youth"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for Company opened from A&O listing -->
+    <record id="view_company_association_form" model="ir.ui.view">
+        <field name="name">res.company.association.form</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <form string="Association / Organization (Company)">
+                <sheet>
+                    <div class="d-flex gap-2">
+                        <field name="logo" widget="contact_image" class="oe_avatar text-start float-none"
+                               nolabel="1" options="{'size': [100,100], 'img_class': 'rounded-4'}"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. Lusaka Youth Association"/>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group string="Classification">
+                            <field name="entity_kind" required="1"/>
+                            <field name="org_status"/>
+                            <field name="org_code"/>
+                            <field name="registration_number"/>
+                        </group>
+                        <group string="Usage Domains">
+                            <field name="is_sports"/>
+                            <field name="is_arts"/>
+                            <field name="is_youth"/>
+                        </group>
+                    </group>
+
+                    <group string="Domain Details">
+                        <field name="sports_type" invisible="not is_sports"/>
+                        <field name="art_focus" invisible="not is_arts"/>
+                        <field name="organization_type" invisible="not is_youth"/>
+                    </group>
+
+                    <group string="Contact Information">
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="website" widget="url"/>
+                        </group>
+                        <group>
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" class="o_address_state" placeholder="State"
+                                       options='{"no_open": True}'/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country"
+                                       options='{"no_open": True, "no_create": True}'/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <group string="Description">
+                        <field name="org_description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view -->
+    <record id="view_company_association_search" model="ir.ui.view">
+        <field name="name">res.company.association.search</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <search string="Associations &amp; Organizations (Companies)">
+                <field name="name"/>
+                <field name="entity_kind"/>
+                <filter name="sports" string="Sports" domain="[('is_sports', '=', True)]"/>
+                <filter name="arts" string="Arts" domain="[('is_arts', '=', True)]"/>
+                <filter name="youth" string="Youth" domain="[('is_youth', '=', True)]"/>
+                <filter name="association" string="Associations"
+                        domain="[('entity_kind', '=', 'association')]"/>
+                <filter name="organization" string="Organizations"
+                        domain="[('entity_kind', '=', 'organization')]"/>
+                <filter name="institution" string="Institutions"
+                        domain="[('entity_kind', '=', 'institution')]"/>
+                <group>
+                    <filter name="group_kind" string="Type" context="{'group_by': 'entity_kind'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'org_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Window action: list only companies that have an entity_kind set -->
+    <record id="action_company_as_association" model="ir.actions.act_window">
+        <field name="name">Companies (Associations &amp; Organizations)</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('entity_kind', '!=', False)]</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_company_association_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_company_association_form')})]"/>
+        <field name="search_view_id" ref="view_company_association_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No companies registered as Associations or Organizations yet.
+            </p>
+            <p>
+                When creating a company, set its Type to Association, Organization, or Institution
+                to have it appear here. Companies can then log in and manage their own records.
+            </p>
+        </field>
+    </record>
+</odoo>

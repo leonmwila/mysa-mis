@@ -11,6 +11,7 @@
         'depends': ['base', 'sports_tracking', 'venues_management'],
     'data': [
         'security/ir.model.access.csv',
+        'security/event_program_security.xml',
         'views/event_program_views.xml',
         'views/participant_views.xml',
         'views/result_views.xml',

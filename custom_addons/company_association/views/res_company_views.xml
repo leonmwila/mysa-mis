@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend the standard company form to add Association / Organization fields -->
+    <record id="view_company_form_association_inherit" model="ir.ui.view">
+        <field name="name">res.company.form.association.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <!-- Insert a new notebook page after General Information -->
+            <xpath expr="//notebook/page[@name='general_info']" position="after">
+                <page string="Association / Organization" name="association_org">
+                    <group>
+                        <group string="Classification">
+                            <field name="entity_kind"/>
+                            <field name="org_status"/>
+                            <field name="org_code"/>
+                            <field name="registration_number"/>
+                        </group>
+                        <group string="Usage Domains">
+                            <field name="is_sports"/>
+                            <field name="is_arts"/>
+                            <field name="is_youth"/>
+                        </group>
+                    </group>
+                    <group string="Domain Details">
+                        <field name="sports_type" invisible="not is_sports"/>
+                        <field name="art_focus" invisible="not is_arts"/>
+                        <field name="organization_type" invisible="not is_youth"/>
+                    </group>
+                    <group string="Description">
+                        <field name="org_description" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

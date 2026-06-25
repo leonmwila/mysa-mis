@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Companies sub-menu under the existing Associations & Organizations root -->
+    <menuitem id="menu_company_association"
+              name="Companies"
+              parent="associations_organizations.menu_assoc_org_root"
+              action="action_company_as_association"
+              sequence="20"
+              groups="base.group_user"/>
+</odoo>

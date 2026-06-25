@@ -32,6 +32,9 @@ class EventProgram(models.Model):
     venue_id = fields.Many2one('artist.venue', string='Venue')
     location = fields.Char(string='Location')
     coordinator_id = fields.Many2one('res.users', string='Coordinator')
+    company_id = fields.Many2one('res.company', string='Company', required=True,
+                                  default=lambda self: self.env.company,
+                                  help='Company that owns this event/program. Non-Ministry staff see only their company events.')
     # organizer_association_id = fields.Many2one('sports.association', string='Organizing Association')
     organizer_association_name = fields.Char(string='Organizing Association')
     participants_ids = fields.One2many('event.participant', 'program_id', string='Participants')
