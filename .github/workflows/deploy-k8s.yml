@@ -46,6 +46,25 @@ jobs:
           fi
           chmod 600 "$HOME/.kube/config"
 
+      - name: Validate kubeconfig endpoint
+        run: |
+          SERVER=$(kubectl config view --minify -o jsonpath='{.clusters[0].cluster.server}')
+          echo "Using API server: $SERVER"
+          if [[ -z "$SERVER" ]]; then
+            echo "ERROR: kubeconfig secret is empty or invalid (no cluster server found)."
+            exit 1
+          fi
+          if [[ "$SERVER" =~ 127\.0\.0\.1|localhost ]]; then
+            echo "ERROR: kubeconfig server points to localhost."
+            echo "Update KUBECONFIG_${ENV_NAME^^} secret to use your VM IP/DNS (for example: https://<vm-ip>:6443)."
+            exit 1
+          fi
+
+      - name: Verify cluster access
+        run: |
+          kubectl cluster-info
+          kubectl get nodes -o wide
+
       - name: Deploy with kustomize
         env:
           ENV_NAME: ${{ inputs.environment }}
