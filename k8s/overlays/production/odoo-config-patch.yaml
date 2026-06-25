@@ -17,6 +17,6 @@ data:
     logfile = False
     workers = 6
     max_cron_threads = 2
-    list_db = False
+    list_db = True
     admin_passwd = Admin@2023
     data_dir = /var/lib/odoo
