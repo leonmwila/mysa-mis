@@ -146,10 +146,43 @@ Manual workflow to deploy from GitHub to staging or production.
 1. Add GitHub repository secrets:
    - `KUBECONFIG_STAGING`: Full kubeconfig content for staging cluster
    - `KUBECONFIG_PRODUCTION`: Full kubeconfig content for production cluster
-2. Use the **Actions** tab to trigger manually:
+2. Add a self-hosted runner for production deployments (private VM network):
+  - Configure labels: `self-hosted`, `linux`, `x64`, `k8s-prod`
+  - The production job runs only on this runner.
+3. Keep staging on `ubuntu-latest` (GitHub-hosted runner).
+4. For `KUBECONFIG_PRODUCTION`, set cluster server to a reachable endpoint, for example `https://10.21.1.25:6443` (not `127.0.0.1`).
+5. Use the **Actions** tab to trigger manually:
    - Select environment (staging or production)
    - Specify image tag (e.g., `sha-abc1234`)
-3. Workflow validates rollout with `kubectl rollout status`
+6. Workflow validates kubeconfig endpoint, checks cluster access, then validates rollout with `kubectl rollout status`.
+
+### Self-Hosted Runner (Production)
+
+Run these on the production VM to register a GitHub Actions runner in your private network:
+
+```bash
+# Create runner user and folder (optional but recommended)
+sudo useradd -m -s /bin/bash github-runner || true
+sudo mkdir -p /opt/github-runner
+sudo chown -R github-runner:github-runner /opt/github-runner
+
+# Switch user
+sudo -u github-runner -H bash
+cd /opt/github-runner
+
+# Download latest Linux x64 runner package from GitHub Releases
+curl -L -o actions-runner.tar.gz https://github.com/actions/runner/releases/latest/download/actions-runner-linux-x64.tar.gz
+tar xzf actions-runner.tar.gz
+
+# Configure runner (replace URL and token from GitHub > Settings > Actions > Runners)
+./config.sh --url https://github.com/leonmwila/mysa-mis --token <RUNNER_REGISTRATION_TOKEN> --labels k8s-prod --unattended
+
+# Install and start service
+sudo ./svc.sh install
+sudo ./svc.sh start
+```
+
+Confirm runner is online in GitHub and has label `k8s-prod`.
 
 **Example:**
 ```bash
