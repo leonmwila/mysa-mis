@@ -9,8 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: mysa.mis.internal
-      http:
+    - http:
         paths:
           - path: /
             pathType: Prefix
