@@ -1,0 +1,214 @@
+:root {
+    --o-left-sidebar-menu-width: 280px;
+}
+
+body.o_left_sidebar_menu_enabled {
+    @include media-breakpoint-up(lg) {
+        &.o_web_client,
+        .o_web_client {
+            padding-left: var(--o-left-sidebar-menu-width);
+            box-sizing: border-box;
+        }
+
+        .o_main_navbar {
+            .o_menu_toggle,
+            .o_navbar_apps_menu,
+            .o_menu_brand,
+            .o_menu_sections {
+                display: none !important;
+            }
+        }
+
+        &.o_web_client > .o_action_manager,
+        .o_web_client > .o_action_manager,
+        .o_main_navbar {
+            width: 100%;
+            min-width: 0;
+            margin-left: 0;
+        }
+    }
+}
+
+.o_left_sidebar_menu {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1040;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: var(--o-left-sidebar-menu-width);
+    min-width: var(--o-left-sidebar-menu-width);
+    max-width: var(--o-left-sidebar-menu-width);
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    overflow: hidden;
+    background: $o-view-background-color;
+    border-right: 1px solid $o-gray-200;
+    color: $o-main-text-color;
+    pointer-events: auto;
+}
+
+.o_left_sidebar_menu_header {
+    display: flex;
+    align-items: center;
+    min-height: var(--o-navbar-height);
+    padding: 6px 12px;
+    border-bottom: 1px solid $o-gray-200;
+}
+
+.o_left_sidebar_home {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: $o-main-text-color;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        background: $o-gray-100;
+        color: $o-main-text-color;
+        text-decoration: none;
+    }
+}
+
+.o_left_sidebar_menu_scroll {
+    display: block;
+    height: 100%;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: scroll !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    padding: 8px;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+}
+
+.o_left_sidebar_apps,
+.o_left_sidebar_sections {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.o_left_sidebar_app {
+    min-width: 0;
+}
+
+.o_left_sidebar_app_link,
+.o_left_sidebar_section_link {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    color: $o-main-text-color;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        background: $o-gray-100;
+        color: $o-main-text-color;
+        text-decoration: none;
+    }
+}
+
+.o_left_sidebar_app_link {
+    gap: 10px;
+    min-height: 44px;
+    padding: 7px 9px;
+    border-radius: 6px;
+    font-weight: 500;
+
+    &.active {
+        background: $o-gray-200;
+        color: $o-black;
+        font-weight: 600;
+    }
+}
+
+.o_left_sidebar_app_icon {
+    flex: 0 0 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+    border-radius: 6px;
+
+    img {
+        display: block;
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+    }
+}
+
+.o_left_sidebar_app_name,
+.o_left_sidebar_section_link span,
+.o_left_sidebar_section_group span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.o_left_sidebar_sections {
+    padding: 3px 0 8px 38px;
+}
+
+.o_left_sidebar_sections_nested {
+    padding: 2px 0 4px 0;
+}
+
+.o_left_sidebar_section_link,
+.o_left_sidebar_section_group {
+    min-height: 32px;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.25;
+}
+
+.o_left_sidebar_section_link {
+    color: $o-main-color-muted;
+}
+
+.o_left_sidebar_section_group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: space-between;
+    min-width: 0;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: $o-main-text-color;
+    font-weight: 600;
+    text-align: left;
+
+    &:hover,
+    &:focus {
+        background: $o-gray-100;
+    }
+}
+
+.o_left_sidebar_section_caret {
+    flex: 0 0 auto;
+    color: $o-main-color-muted;
+    font-size: 12px;
+    line-height: 1;
+}
+
+@include media-breakpoint-down(md) {
+    .o_left_sidebar_menu {
+        display: none;
+    }
+}

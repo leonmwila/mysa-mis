@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="web_left_sidebar_menu.WebClient" t-inherit="web.WebClient" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='!state.fullscreen']" position="before">
+            <aside t-if="!state.fullscreen and !env.isSmall" class="o_left_sidebar_menu" aria-label="Applications">
+                <div class="o_left_sidebar_menu_header">
+                    <a href="/odoo" class="o_left_sidebar_home" t-on-click.prevent="onLeftSidebarHomeClick" title="All Apps">
+                        <i class="oi oi-apps" aria-hidden="true"/>
+                        <span>Apps</span>
+                    </a>
+                </div>
+                <nav class="o_left_sidebar_menu_scroll">
+                    <ul class="o_left_sidebar_apps">
+                        <t t-foreach="menuService.getApps()" t-as="app" t-key="app.id">
+                            <li class="o_left_sidebar_app">
+                                <a
+                                    t-att-href="getLeftSidebarMenuItemHref(app)"
+                                    class="o_left_sidebar_app_link"
+                                    t-att-class="{'active': this.isLeftSidebarAppActive(app)}"
+                                    t-att-data-menu-xmlid="app.xmlid"
+                                    t-att-data-section="app.id"
+                                    t-on-click.prevent="() => this.onLeftSidebarAppSelection(app)"
+                                >
+                                    <span class="o_left_sidebar_app_icon">
+                                        <img t-if="app.webIconData" t-att-src="app.webIconData" t-att-alt="app.name"/>
+                                        <i t-else="" class="oi oi-apps" aria-hidden="true"/>
+                                    </span>
+                                    <span class="o_left_sidebar_app_name" t-esc="app.name"/>
+                                </a>
+                                <t t-if="this.isLeftSidebarAppActive(app)">
+                                    <t t-call="web_left_sidebar_menu.Sections">
+                                        <t t-set="sections" t-value="this.getLeftSidebarAppSections(app)"/>
+                                        <t t-set="level" t-value="0"/>
+                                    </t>
+                                </t>
+                            </li>
+                        </t>
+                    </ul>
+                </nav>
+            </aside>
+        </xpath>
+    </t>
+
+    <t t-name="web_left_sidebar_menu.Sections">
+        <ul t-if="sections.length" class="o_left_sidebar_sections" t-att-class="{'o_left_sidebar_sections_nested': level gt 0}">
+            <t t-foreach="sections" t-as="section" t-key="section.id">
+                <li class="o_left_sidebar_section">
+                    <t t-if="section.childrenTree.length">
+                        <button
+                            type="button"
+                            class="o_left_sidebar_section_group"
+                            t-att-class="{'collapsed': this.isLeftSidebarSectionCollapsed(section)}"
+                            t-att-style="`padding-left: ${9 + level * 12}px;`"
+                            t-att-aria-expanded="!this.isLeftSidebarSectionCollapsed(section)"
+                            t-on-click.stop.prevent="() => this.toggleLeftSidebarSection(section)"
+                        >
+                            <span t-esc="section.name"/>
+                            <i
+                                class="o_left_sidebar_section_caret fa"
+                                t-att-class="this.isLeftSidebarSectionCollapsed(section) ? 'fa-angle-right' : 'fa-angle-down'"
+                                aria-hidden="true"
+                            />
+                        </button>
+                        <t t-if="!this.isLeftSidebarSectionCollapsed(section)" t-call="web_left_sidebar_menu.Sections">
+                            <t t-set="sections" t-value="section.childrenTree"/>
+                            <t t-set="level" t-value="level + 1"/>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <a
+                            t-att-href="getLeftSidebarMenuItemHref(section)"
+                            class="o_left_sidebar_section_link"
+                            t-att-style="`padding-left: ${9 + level * 12}px;`"
+                            t-att-data-menu-xmlid="section.xmlid"
+                            t-att-data-section="section.id"
+                            t-on-click.prevent="() => this.onLeftSidebarMenuSelection(section)"
+                        >
+                            <span t-esc="section.name"/>
+                        </a>
+                    </t>
+                </li>
+            </t>
+        </ul>
+    </t>
+
+</templates>
