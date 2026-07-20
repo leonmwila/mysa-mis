@@ -66,6 +66,42 @@ Before deploying, update:
 - `k8s/overlays/production/ingress-patch.yaml` (host and TLS secret)
 - `k8s/overlays/production/kustomization.yaml` image owner
 
+### Reusable Production Deploy Flow (GHCR SHA Tag)
+
+Use this flow to promote a tested commit to production in any similar project:
+
+1. Build and push image to GHCR from CI (tag format: `sha-<commit>`).
+2. Point kubectl to the production kubeconfig.
+3. Update deployment image to the immutable SHA tag.
+4. Wait for rollout completion and verify running image.
+
+```bash
+# Use production kubeconfig explicitly (recommended)
+KUBECONFIG=~/.kube/config-production kubectl cluster-info
+
+# Deploy a specific immutable image tag
+IMAGE_TAG=sha-<commit>
+KUBECONFIG=~/.kube/config-production \
+	kubectl -n mysa-mis set image deployment/odoo \
+	odoo=ghcr.io/leonmwila/mysa-mis:${IMAGE_TAG}
+
+# Verify rollout
+KUBECONFIG=~/.kube/config-production \
+	kubectl -n mysa-mis rollout status deployment/odoo --timeout=300s
+
+# Verify the deployed image
+KUBECONFIG=~/.kube/config-production \
+	kubectl -n mysa-mis get deploy odoo \
+	-o jsonpath='{.spec.template.spec.containers[0].image}{"\n"}'
+```
+
+Notes:
+
+- `minikube image build ...` is local-only and does not deploy to production.
+- If kubeconfig uses `https://127.0.0.1:6443`, replace it with your VM/server IP or DNS.
+- If `kustomize` is not installed, prefer `kubectl kustomize` when available.
+- Using SHA tags avoids stale image pulls when `imagePullPolicy` is `IfNotPresent`.
+
 ## GitHub Container Registry and CI/CD
 
 Two workflows are included:

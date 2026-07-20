@@ -9,7 +9,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - http:
+    - host: mysa.grz.gov.zm
+      http:
         paths:
           - path: /
             pathType: Prefix
