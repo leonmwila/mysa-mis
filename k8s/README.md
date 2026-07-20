@@ -51,7 +51,9 @@ Before deploying, update:
 - `k8s/overlays/staging/ingress-patch.yaml` (host and TLS secret)
 - `k8s/overlays/staging/kustomization.yaml` image owner
 
-## 3) Production VM
+## 3) Production on K3s
+
+Use K3s on production as well if the server already has the same app deployed there. K3s ships with Traefik by default, so the production overlay is configured for Traefik ingress on plain HTTP until you add TLS.
 
 Deploy production overlay:
 
@@ -63,7 +65,7 @@ Before deploying, update:
 
 - `k8s/overlays/production/postgres-secret-patch.yaml`
 - `k8s/overlays/production/odoo-config-patch.yaml`
-- `k8s/overlays/production/ingress-patch.yaml` (host and TLS secret)
+- `k8s/overlays/production/ingress-patch.yaml` (host)
 - `k8s/overlays/production/kustomization.yaml` image owner
 
 ### Reusable Production Deploy Flow (GHCR SHA Tag)
@@ -120,8 +122,8 @@ Use the deploy workflow with an immutable `sha-*` tag for predictable rollouts.
 ## Ingress advice
 
 - Local Minikube: NGINX ingress is simple and sufficient.
-- Staging/Production on K3s: Traefik is a good default.
-- For TLS automation, add cert-manager with Let’s Encrypt and switch TLS secrets to cert-manager managed certificates.
+- Staging/Production on K3s: Traefik is a good default, and the production overlay should use `ingressClassName: traefik`.
+- For TLS automation, add cert-manager with Let’s Encrypt and then switch the production ingress to `websecure` with a real TLS secret.
 
 ## Heavy import consideration
 
