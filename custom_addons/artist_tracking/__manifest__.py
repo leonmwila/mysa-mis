@@ -1,6 +1,6 @@
 {
     'name': 'Artist Tracking & Analytics',
-    'version': '1.0',
+    'version': '1.0.3',
     'author': 'Smart Zambia Institute',
     'category': 'Arts Management',
     'summary': 'Track artists, performance metrics, and generate arts analytics',
@@ -46,6 +46,11 @@
         'views/common_association_extension_views.xml',
         'views/menu.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'artist_tracking/static/src/scss/performance_form.scss',
+        ],
+    },
     'installable': True,
     'application': True,
     'auto_install': False,

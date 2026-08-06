@@ -1,5 +1,5 @@
 @media (min-width: 768px) {
-    .o_show_side_bar_enabled #o_show_side_bar_panel {
+    body.o_show_side_bar_enabled:not(.o_left_sidebar_menu_enabled) #o_show_side_bar_panel {
         position: fixed;
         top: var(--o-navbar-height);
         left: 0;
@@ -57,12 +57,17 @@
         color: #6b7785;
     }
 
-    .o_show_side_bar_enabled .o_main_navbar,
-    .o_show_side_bar_enabled .o_action_manager {
+    body.o_show_side_bar_enabled:not(.o_left_sidebar_menu_enabled) .o_main_navbar,
+    body.o_show_side_bar_enabled:not(.o_left_sidebar_menu_enabled) .o_action_manager {
         margin-left: 280px;
     }
 
-    .o_show_side_bar_enabled .o_main_navbar {
+    body.o_show_side_bar_enabled:not(.o_left_sidebar_menu_enabled) .o_main_navbar {
         width: calc(100% - 280px);
+    }
+
+    /* If the left sidebar module is active, fully disable this sidebar layout. */
+    body.o_left_sidebar_menu_enabled #o_show_side_bar_panel {
+        display: none !important;
     }
 }

@@ -1,0 +1,35 @@
+.o_form_view.o_artist_performance_form {
+    .o_form_sheet_bg {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .o-mail-Form-chatter.o-aside,
+    .o-mail-ChatterContainer.o-aside {
+        flex: 0 0 420px !important;
+        width: 420px !important;
+        max-width: 420px !important;
+    }
+}
+
+@media (max-width: 1400px) {
+    .o_form_view.o_artist_performance_form {
+        .o-mail-Form-chatter.o-aside,
+        .o-mail-ChatterContainer.o-aside {
+            flex-basis: 360px !important;
+            width: 360px !important;
+            max-width: 360px !important;
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .o_form_view.o_artist_performance_form {
+        .o-mail-Form-chatter.o-aside,
+        .o-mail-ChatterContainer.o-aside {
+            flex-basis: auto !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+    }
+}

@@ -5,7 +5,7 @@
         <field name="name">artist.performance.metric.form</field>
         <field name="model">artist.performance.metric</field>
         <field name="arch" type="xml">
-            <form string="Artist Performance">
+            <form string="Artist Performance" class="o_artist_performance_form">
                 <header>
                     <button name="action_mark_completed" type="object" string="Mark Completed" 
                            class="btn-primary" invisible="status == 'completed'"/>
@@ -86,12 +86,9 @@
                             </group>
                         </page>
                     </notebook>
+
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids"/>
-                    <field name="activity_ids"/>
-                    <field name="message_ids"/>
-                </div>
+                <chatter/>
             </form>
         </field>
     </record>
