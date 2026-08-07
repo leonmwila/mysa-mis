@@ -1,6 +1,6 @@
 {
     'name': 'Youth Tracking & Empowerment',
-    'version': '1.0.0',
+    'version': '1.0.1',
     'author': 'Smart Zambia Institute',
     'category': 'Youth Management',
     'summary': 'Youth Program Management, Skills Training, CDF Applications & Empowerment Tracking',

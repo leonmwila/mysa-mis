@@ -1,6 +1,6 @@
 {
     'name': 'Sports Tracking & Analytics',
-    'version': '1.0',
+    'version': '1.0.1',
     'author': 'Smart Zambia Institute',
     'category': 'Sports Management',
     'summary': 'Track athletes, performance metrics, and generate sports analytics',
